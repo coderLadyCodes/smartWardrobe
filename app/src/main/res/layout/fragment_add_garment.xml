@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/mannequin1"
+    android:gravity="center"
     android:orientation="vertical"
     tools:context=".AddGarment">
 
@@ -33,17 +34,17 @@
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/addyourgarment"
-        app:layout_constraintVertical_bias="0.083" >
+        app:layout_constraintVertical_bias="0.083">
 
         <ImageButton
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_gravity="center"
             android:background="@color/purple"
-            android:src="@drawable/baseline_photo_camera_24"
+            android:contentDescription="@string/add_your_garment"
             android:scaleType="fitCenter"
-            app:tint="@color/pink"
-            android:contentDescription="@string/add_your_garment"/>
+            android:src="@drawable/baseline_photo_camera_24"
+            app:tint="@color/pink" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -52,6 +53,35 @@
             android:gravity="bottom"
             android:text="@string/upload_your_image_here"
             android:textColor="@color/white"
-            android:textSize="16sp" />
+            android:textSize="14sp" />
     </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_margin="10dp"
+        android:layout_height="60dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/framelayout"
+        app:layout_constraintVertical_bias="0.096">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="10dp"
+            android:text="Category : "
+            android:textColor="@color/purple"
+            android:textSize="18sp" />
+
+        <Spinner
+            android:id="@+id/spinnercategory"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </Spinner>
+
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
