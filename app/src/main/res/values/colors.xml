@@ -2,4 +2,11 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="pink">#D800A6</color>
+    <color name="colorPrimary">#D800A6</color>
+    <color name="purple">#400D51</color>
+    <color name="colorPrimaryDark">#400D51</color>
+    <color name="peach">#FF7777</color>
+    <color name="colorAccent">#FF7777</color>
+    <color name="turquoise">#31E1F7</color>
 </resources>
