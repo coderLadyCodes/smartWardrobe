@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">SmartWardrobe</string>
     <string name="add_your_garment">Add your Garment</string>
+    <string name="upload_your_image_here">Upload your image here</string>
 </resources>
