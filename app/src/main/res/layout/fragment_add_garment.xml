@@ -58,30 +58,31 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_margin="10dp"
-        android:layout_height="60dp"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/framelayout"
-        app:layout_constraintVertical_bias="0.096">
+        app:layout_constraintVertical_bias="0.076">
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="10dp"
-            android:text="Category : "
+            android:id="@+id/category"
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:layout_height="wrap_content"
+            android:text="@string/category"
             android:textColor="@color/purple"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:textAlignment="textEnd"/>
 
         <Spinner
             android:id="@+id/spinnercategory"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-        </Spinner>
-
+            android:layout_width="0dp"
+            android:layout_weight="6"
+            android:gravity="center"
+            android:layout_height="50dp"
+            android:spinnerMode="dialog" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

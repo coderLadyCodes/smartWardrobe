@@ -29,6 +29,10 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+
+    buildFeatures {
+        viewBinding = true
+    }
 }
 
 dependencies {
@@ -43,4 +47,8 @@ dependencies {
     implementation("androidx.navigation:navigation-fragment:2.7.1")
     implementation("androidx.navigation:navigation-ui:2.7.1")
     implementation("androidx.navigation:navigation-dynamic-features-fragment:2.7.1")
+    implementation ("group: 'com.airbnb.android', name: 'lottie', version: '6.0.0'")
+    // https://mvnrepository.com/artifact/com.airbnb.android/lottie
+    runtimeOnly("com.airbnb.android:lottie:6.1.0")
+
 }
