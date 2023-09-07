@@ -6,39 +6,42 @@
     android:layout_height="wrap_content"
     android:background="@drawable/mannequin1"
     android:fillViewport="true"
-    android:id="@+id/fragmentGarmentList">
+    android:id="@+id/fragmentChosenOutfits">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="vertical"
-        tools:context=".GarmentList">
+        tools:context=".ChosenOutfits">
 
         <TextView
-            android:id="@+id/mycloset"
+            android:id="@+id/outfitschosen"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/my_closet"
+            android:text="@string/previous_outfits_chosen"
             android:textColor="@color/pink"
             android:textSize="29sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.494"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.023" />
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/listofoutfits"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/my_clothes_i_added_to_my_closet"
+            android:text="@string/here_is_a_list_of_my_outfits"
             android:textColor="@color/pink"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/mycloset"
+            app:layout_constraintTop_toBottomOf="@+id/outfitschosen"
             app:layout_constraintVertical_bias="0.0" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
+

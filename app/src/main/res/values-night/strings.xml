@@ -12,7 +12,18 @@
     <string name="loose"><b>Loose :</b></string>
     <string name="fancy"><b>Fancy :</b></string>
     <string name="color"><b>Color :</b></string>
-    <string name="add_this_garment">Add This Garment</string>
+    <string name="add_this_garment">Add This Garment to My Closet</string>
     <string name="color_of_your_item">color of your item</string>
     <string name="today_i_want_my_outfit_to_be"><b>Today I want my outfit to be :</b></string>
+    <string name="my_choices">My Choices</string>
+    <string name="generate_my_outfit">Generate my Outfit</string>
+    <string name="here_is_my_today_s_outfit"><b>Here is My today\'s Outfit</b></string>
+    <string name="my_closet"><b>My Closet</b></string>
+    <string name="my_clothes_i_added_to_my_closet">My Clothes I added to my Closet</string>
+    <string name="add_clothes_to_my_closet">Add clothes to my closet</string>
+    <string name="what_s_in_my_closet">what\'s in my closet</string>
+    <string name="outfits_chosen">Outfits Chosen</string>
+    <string name="i_want_to_chose_my_outfit">I want To Chose My Outfit</string>
+    <string name="previous_outfits_chosen"><b>Previous Outfits Chosen</b></string>
+    <string name="here_is_a_list_of_my_outfits">Here is a List of My outfits</string>
 </resources>

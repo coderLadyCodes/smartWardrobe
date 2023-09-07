@@ -11,17 +11,15 @@
         android:label="fragment_splash_screen"
         tools:layout="@layout/fragment_splash_screen" >
         <action
-            android:id="@+id/action_splashScreen_to_addGarment"
-            app:destination="@id/addGarment" />
+            android:id="@+id/action_splashScreen_to_welcome"
+            app:destination="@id/welcome" />
     </fragment>
     <fragment
         android:id="@+id/addGarment"
         android:name="com.example.smartwardrobe.AddGarment"
         android:label="fragment_add_garment"
         tools:layout="@layout/fragment_add_garment" >
-        <action
-            android:id="@+id/action_addGarment_to_chooseOutfit"
-            app:destination="@id/chooseOutfit" />
+
         <action
             android:id="@+id/action_addGarment_to_garmentList"
             app:destination="@id/garmentList" />
@@ -45,4 +43,28 @@
         android:name="com.example.smartwardrobe.GarmentList"
         android:label="fragment_garment_list"
         tools:layout="@layout/fragment_garment_list" />
+    <fragment
+        android:id="@+id/welcome"
+        android:name="com.example.smartwardrobe.Welcome"
+        android:label="fragment_welcome"
+        tools:layout="@layout/fragment_welcome" >
+        <action
+            android:id="@+id/action_welcome_to_addGarment"
+            app:destination="@id/addGarment" />
+        <action
+            android:id="@+id/action_welcome_to_garmentList"
+            app:destination="@id/garmentList" />
+
+        <action
+            android:id="@+id/action_welcome_to_chooseOutfit"
+            app:destination="@id/chooseOutfit" />
+        <action
+            android:id="@+id/action_welcome_to_chosenOutfits"
+            app:destination="@id/chosenOutfits" />
+    </fragment>
+    <fragment
+        android:id="@+id/chosenOutfits"
+        android:name="com.example.smartwardrobe.ChosenOutfits"
+        android:label="fragment_chosen_outfits"
+        tools:layout="@layout/fragment_chosen_outfits" />
 </navigation>

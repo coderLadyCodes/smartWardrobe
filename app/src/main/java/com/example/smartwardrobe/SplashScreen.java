@@ -36,7 +36,7 @@ public class SplashScreen extends Fragment {
         // SPLASH SCREEN
         new Handler().postDelayed(() -> {
             NavController navController = Navigation.findNavController(binding.getRoot());
-            navController.navigate(R.id.action_splashScreen_to_addGarment);
+            navController.navigate(R.id.action_splashScreen_to_welcome);
 
         }, 7000);
         return binding.getRoot();

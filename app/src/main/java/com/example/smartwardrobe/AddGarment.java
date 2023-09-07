@@ -31,10 +31,10 @@ public class AddGarment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        binding.addgarment.setOnClickListener(new View.OnClickListener() {
+        binding.buttonaddgarment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Navigation.findNavController(view).navigate(R.id.action_addGarment_to_chooseOutfit);
+                Navigation.findNavController(view).navigate(R.id.action_addGarment_to_garmentList);
             }
         });
     }
