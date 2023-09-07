@@ -320,6 +320,7 @@
         android:layout_margin="20dp"
         android:background="@drawable/button"
         android:padding="20dp"
+        android:alpha="0.8"
         android:text="@string/add_this_garment"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"

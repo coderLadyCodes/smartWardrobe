@@ -11,7 +11,7 @@
 
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/iwantmyoutfit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/today_i_want_my_outfit_to_be"
@@ -23,5 +23,198 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.036" />
+
+    <TextView
+        android:id="@+id/choices"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/my_choices"
+        android:textColor="@color/purple"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iwantmyoutfit"
+        app:layout_constraintVertical_bias="0.104" />
+
+    <LinearLayout
+        android:id="@+id/layoutattributes"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/choices"
+        app:layout_constraintVertical_bias="0.129">
+
+        <LinearLayout
+            android:id="@+id/layoutwarmth"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="@string/warmth"
+                android:textAlignment="textEnd"
+                android:textColor="@color/purple"
+                android:textSize="18sp" />
+
+            <Spinner
+                android:id="@+id/spinnerwarmth"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="6"
+                android:gravity="center"
+                android:spinnerMode="dialog" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layoutcomfort"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="@string/comfort"
+                android:textAlignment="textEnd"
+                android:textColor="@color/purple"
+                android:textSize="18sp" />
+
+            <RadioGroup
+                android:id="@+id/layoutcomfortradio"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="6"
+                android:gravity="start"
+                android:orientation="horizontal"
+                android:paddingStart="20dp"
+                tools:ignore="RtlSymmetry">
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="40dp"
+                    android:text="@string/yes" />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/no" />
+            </RadioGroup>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layoutloose"
+            android:layout_width="407dp"
+            android:layout_height="38dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="@string/loose"
+                android:textAlignment="textEnd"
+                android:textColor="@color/purple"
+                android:textSize="18sp" />
+
+            <RadioGroup
+                android:id="@+id/layoutlooseradio"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="6"
+                android:gravity="start"
+                android:orientation="horizontal"
+                android:paddingStart="20dp"
+                tools:ignore="RtlSymmetry">
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="40dp"
+                    android:text="@string/yes" />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/no" />
+            </RadioGroup>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layoutfancy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="@string/fancy"
+                android:textAlignment="textEnd"
+                android:textColor="@color/purple"
+                android:textSize="18sp" />
+
+            <RadioGroup
+                android:id="@+id/layoutfancyradio"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="6"
+                android:gravity="start"
+                android:orientation="horizontal"
+                android:paddingStart="20dp"
+                tools:ignore="RtlSymmetry">
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="40dp"
+                    android:text="@string/yes" />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/no" />
+            </RadioGroup>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layoutcolor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/color"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/color"
+                android:textAlignment="textEnd"
+                android:textColor="@color/purple"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/editcolor"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_marginEnd="94dp"
+                android:layout_weight="2"
+                android:gravity="center"
+                android:hint="@string/color_of_your_item"
+                android:spinnerMode="dialog" />
+        </LinearLayout>
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
