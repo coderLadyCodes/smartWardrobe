@@ -11,17 +11,45 @@
 
 
     <TextView
+        android:id="@+id/welcometosmartwardrob"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/welcome_to_smart_wardrobe"
+        android:textColor="@color/pink"
+        android:textSize="29sp"
+        app:layout_constraintBottom_toTopOf="@+id/addyourgarment"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.487"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.195" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/the_app_that_chooses_your_outfit_for_you"
+        android:textColor="@color/pink"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/addyourgarment"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/welcometosmartwardrob"
+        app:layout_constraintVertical_bias="0.159" />
+
+    <TextView
         android:id="@+id/addyourgarment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/add_your_garment"
-        android:textColor="@color/pink"
+        android:textColor="@color/purple"
         android:textSize="28sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.023" />
+        app:layout_constraintVertical_bias="0.164" />
 
     <FrameLayout
         android:id="@+id/framelayout"
@@ -34,7 +62,7 @@
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/addyourgarment"
-        app:layout_constraintVertical_bias="0.083">
+        app:layout_constraintVertical_bias="0.057">
 
         <ImageButton
             android:layout_width="60dp"
@@ -57,6 +85,7 @@
     </FrameLayout>
 
     <LinearLayout
+        android:id="@+id/layoutcategory"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -70,19 +99,204 @@
         <TextView
             android:id="@+id/category"
             android:layout_width="0dp"
-            android:layout_weight="2"
             android:layout_height="wrap_content"
+            android:layout_weight="2"
             android:text="@string/category"
+            android:textAlignment="textEnd"
             android:textColor="@color/purple"
-            android:textSize="18sp"
-            android:textAlignment="textEnd"/>
+            android:textSize="18sp" />
 
         <Spinner
             android:id="@+id/spinnercategory"
             android:layout_width="0dp"
+            android:layout_height="50dp"
             android:layout_weight="6"
             android:gravity="center"
-            android:layout_height="50dp"
             android:spinnerMode="dialog" />
     </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layoutwarmth"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layoutcategory"
+        app:layout_constraintVertical_bias="0.0">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:text="@string/warmth"
+            android:textAlignment="textEnd"
+            android:textColor="@color/purple"
+            android:textSize="18sp" />
+
+        <Spinner
+            android:id="@+id/spinnerwarmth"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="6"
+            android:gravity="center"
+            android:spinnerMode="dialog" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layoutcomfort"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layoutwarmth"
+        app:layout_constraintVertical_bias="0.0">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:text="@string/comfort"
+            android:textAlignment="textEnd"
+            android:textColor="@color/purple"
+            android:textSize="18sp" />
+
+        <CheckBox
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="3"
+            android:text="@string/yes" />
+
+        <CheckBox
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="3"
+            android:text="@string/no" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layoutloose"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layoutcomfort"
+        app:layout_constraintVertical_bias="0.0">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:text="@string/loose"
+            android:textAlignment="textEnd"
+            android:textColor="@color/purple"
+            android:textSize="18sp" />
+
+        <CheckBox
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="3"
+            android:text="@string/yes" />
+
+        <CheckBox
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="3"
+            android:text="@string/no" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layoutfancy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layoutloose"
+        app:layout_constraintVertical_bias="0.0">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:text="@string/fancy"
+            android:textAlignment="textEnd"
+            android:textColor="@color/purple"
+            android:textSize="18sp" />
+
+        <CheckBox
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="3"
+            android:text="@string/yes" />
+
+        <CheckBox
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="3"
+            android:text="@string/no" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layoutcolor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layoutfancy"
+        app:layout_constraintVertical_bias="0.0">
+
+        <TextView
+            android:id="@+id/color"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/color"
+            android:textAlignment="textEnd"
+            android:textColor="@color/purple"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/editcolor"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginEnd="94dp"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:spinnerMode="dialog"
+            android:hint="@string/color_of_your_item"/>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:background="@drawable/button"
+        android:padding="20dp"
+        android:text="@string/add_this_garment"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.4"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layoutcolor"
+        app:layout_constraintVertical_bias="0.62" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

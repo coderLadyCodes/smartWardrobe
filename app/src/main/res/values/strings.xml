@@ -5,4 +5,16 @@
     <string name="category"><b>Category : </b></string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="welcome_to_smart_wardrobe"><b>Welcome to Smart Wardrobe</b></string>
+    <string name="the_app_that_chooses_your_outfit_for_you">The App that Chooses your Outfit for You</string>
+    <string name="warmth"><b>Warmth :</b></string>
+    <string name="comfort"><b>Comfort :</b></string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="loose"><b>Loose :</b></string>
+    <string name="fancy"><b>Fancy :</b></string>
+    <string name="color"><b>Color :</b></string>
+    <string name="add_this_garment">Add This Garment</string>
+    <string name="color_of_your_item">color of your item</string>
+
 </resources>
