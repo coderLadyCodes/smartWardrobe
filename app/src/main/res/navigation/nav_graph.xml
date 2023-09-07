@@ -22,6 +22,9 @@
         <action
             android:id="@+id/action_addGarment_to_chooseOutfit"
             app:destination="@id/chooseOutfit" />
+        <action
+            android:id="@+id/action_addGarment_to_garmentList"
+            app:destination="@id/garmentList" />
     </fragment>
     <fragment
         android:id="@+id/chooseOutfit"
@@ -37,4 +40,9 @@
         android:name="com.example.smartwardrobe.ShowOutfit"
         android:label="fragment_show_outfit"
         tools:layout="@layout/fragment_show_outfit" />
+    <fragment
+        android:id="@+id/garmentList"
+        android:name="com.example.smartwardrobe.GarmentList"
+        android:label="fragment_garment_list"
+        tools:layout="@layout/fragment_garment_list" />
 </navigation>
