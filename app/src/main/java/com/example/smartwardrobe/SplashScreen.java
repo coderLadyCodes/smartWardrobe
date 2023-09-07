@@ -38,7 +38,7 @@ public class SplashScreen extends Fragment {
             NavController navController = Navigation.findNavController(binding.getRoot());
             navController.navigate(R.id.action_splashScreen_to_addGarment);
 
-        }, 6000);
+        }, 7000);
         return binding.getRoot();
     }
 }

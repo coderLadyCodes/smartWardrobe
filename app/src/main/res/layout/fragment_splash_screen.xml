@@ -23,6 +23,6 @@
         app:lottie_cacheComposition="true"
         app:lottie_loop="true"
         app:lottie_rawRes="@raw/splashscreen"
-        app:lottie_speed="0.5" />
+        app:lottie_speed="0.9" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
