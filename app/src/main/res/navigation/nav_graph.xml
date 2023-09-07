@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/splashScreen">
+
+    <fragment
+        android:id="@+id/splashScreen"
+        android:name="com.example.smartwardrobe.SplashScreen"
+        android:label="fragment_splash_screen"
+        tools:layout="@layout/fragment_splash_screen" >
+        <action
+            android:id="@+id/action_splashScreen_to_addGarment"
+            app:destination="@id/addGarment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addGarment"
+        android:name="com.example.smartwardrobe.AddGarment"
+        android:label="fragment_add_garment"
+        tools:layout="@layout/fragment_add_garment" >
+        <action
+            android:id="@+id/action_addGarment_to_chooseOutfit"
+            app:destination="@id/chooseOutfit" />
+    </fragment>
+    <fragment
+        android:id="@+id/chooseOutfit"
+        android:name="com.example.smartwardrobe.ChooseOutfit"
+        android:label="fragment_choose_outfit"
+        tools:layout="@layout/fragment_choose_outfit" >
+        <action
+            android:id="@+id/action_chooseOutfit_to_showOutfit"
+            app:destination="@id/showOutfit" />
+    </fragment>
+    <fragment
+        android:id="@+id/showOutfit"
+        android:name="com.example.smartwardrobe.ShowOutfit"
+        android:label="fragment_show_outfit"
+        tools:layout="@layout/fragment_show_outfit" />
+</navigation>

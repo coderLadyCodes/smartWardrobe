@@ -4,12 +4,12 @@ plugins {
 
 android {
     namespace = "com.example.smartwardrobe"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.example.smartwardrobe"
         minSdk = 24
-        targetSdk = 33
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
@@ -44,11 +44,13 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     implementation("androidx.fragment:fragment:1.6.1")
-    implementation("androidx.navigation:navigation-fragment:2.7.1")
-    implementation("androidx.navigation:navigation-ui:2.7.1")
-    implementation("androidx.navigation:navigation-dynamic-features-fragment:2.7.1")
-    implementation ("group: 'com.airbnb.android', name: 'lottie', version: '6.0.0'")
+    implementation("androidx.navigation:navigation-fragment:2.7.2")
+    implementation("androidx.navigation:navigation-ui:2.7.2")
+    implementation("androidx.navigation:navigation-dynamic-features-fragment:2.7.2")
+    implementation ("group: com.airbnb.android, name: lottie, version: 6.0.0")
     // https://mvnrepository.com/artifact/com.airbnb.android/lottie
-    runtimeOnly("com.airbnb.android:lottie:6.1.0")
+   //implementation("com.airbnb.android:lottie:6.1.0")
+    implementation("androidx.navigation:navigation-fragment:2.7.2")
+    implementation("androidx.navigation:navigation-ui:2.7.2")
 
 }
