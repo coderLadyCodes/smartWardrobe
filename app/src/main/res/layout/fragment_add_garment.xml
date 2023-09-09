@@ -64,7 +64,7 @@
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.473"
+        app:layout_constraintHorizontal_bias="0.157"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/framelayout"
         app:layout_constraintVertical_bias="0.022">
@@ -84,6 +84,7 @@
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_weight="6"
+            android:backgroundTint="@color/peach"
             android:gravity="center"
             android:spinnerMode="dialog" />
     </LinearLayout>
@@ -92,11 +93,11 @@
         android:id="@+id/layoutwarmth"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_margin="10dp"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.157"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/layoutcategory"
         app:layout_constraintVertical_bias="0.0">
@@ -104,9 +105,9 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_weight="2"
             android:text="@string/warmth"
-            android:layout_gravity="center"
             android:textColor="@color/purple"
             android:textSize="18sp" />
 
@@ -115,6 +116,7 @@
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_weight="6"
+            android:backgroundTint="@color/peach"
             android:gravity="center"
             android:spinnerMode="dialog" />
     </LinearLayout>
@@ -127,7 +129,7 @@
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.842"
+        app:layout_constraintHorizontal_bias="0.157"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/layoutwarmth"
         app:layout_constraintVertical_bias="0.0">
@@ -152,16 +154,24 @@
             tools:ignore="RtlSymmetry">
 
             <RadioButton
+                android:id="@+id/yescomfort"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:layout_marginEnd="40dp"
-                android:text="@string/yes" />
+                android:buttonTint="@color/peach"
+                android:text="@string/yes"
+                android:textColor="@color/peach"
+                android:textSize="20sp" />
 
             <RadioButton
+                android:id="@+id/nocomfort"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:layout_marginEnd="40dp"
-                android:text="@string/no" />
+                android:buttonTint="@color/peach"
+                android:text="@string/no"
+                android:textColor="@color/peach"
+                android:textSize="20sp" />
         </RadioGroup>
 
 
@@ -169,23 +179,23 @@
 
     <LinearLayout
         android:id="@+id/layoutloose"
-        android:layout_width="407dp"
-        android:layout_height="38dp"
-        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_margin="10dp"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.526"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/layoutcomfort"
-        app:layout_constraintVertical_bias="0.025">
+        app:layout_constraintVertical_bias="0.0">
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_weight="2"
             android:text="@string/loose"
-            android:layout_gravity="center"
             android:textColor="@color/purple"
             android:textSize="18sp" />
 
@@ -200,16 +210,24 @@
             tools:ignore="RtlSymmetry">
 
             <RadioButton
+                android:id="@+id/yesloose"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:layout_marginEnd="40dp"
-                android:text="@string/yes" />
+                android:buttonTint="@color/peach"
+                android:text="@string/yes"
+                android:textColor="@color/peach"
+                android:textSize="20sp" />
 
             <RadioButton
+                android:id="@+id/noloose"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:layout_marginEnd="40dp"
-                android:text="@string/no" />
+                android:buttonTint="@color/peach"
+                android:text="@string/no"
+                android:textColor="@color/peach"
+                android:textSize="20sp" />
         </RadioGroup>
     </LinearLayout>
 
@@ -221,7 +239,7 @@
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.526"
+        app:layout_constraintHorizontal_bias="0.157"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/layoutloose"
         app:layout_constraintVertical_bias="0.0">
@@ -246,16 +264,24 @@
             tools:ignore="RtlSymmetry">
 
             <RadioButton
+                android:id="@+id/yesfancy"
                 android:layout_width="wrap_content"
+                android:textSize="20sp"
                 android:layout_height="50dp"
                 android:layout_marginEnd="40dp"
-                android:text="@string/yes" />
+                android:buttonTint="@color/peach"
+                android:text="@string/yes"
+                android:textColor="@color/peach" />
 
             <RadioButton
+                android:id="@+id/nofancy"
                 android:layout_width="wrap_content"
+                android:textSize="20sp"
                 android:layout_height="50dp"
                 android:layout_marginEnd="40dp"
-                android:text="@string/no" />
+                android:buttonTint="@color/peach"
+                android:text="@string/no"
+                android:textColor="@color/peach" />
         </RadioGroup>
 
     </LinearLayout>
@@ -268,7 +294,7 @@
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.526"
+        app:layout_constraintHorizontal_bias="0.157"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/layoutfancy"
         app:layout_constraintVertical_bias="0.0">
@@ -287,11 +313,14 @@
             android:id="@+id/editcolor"
             android:layout_width="0dp"
             android:layout_height="50dp"
+            android:textSize="20sp"
             android:layout_marginEnd="94dp"
             android:layout_weight="2"
+            android:backgroundTint="@color/peach"
             android:gravity="center"
             android:hint="@string/color_of_your_item"
-            android:spinnerMode="dialog" />
+            android:spinnerMode="dialog"
+            android:textColorHint="@color/peach" />
     </LinearLayout>
 
     <Button
