@@ -56,5 +56,6 @@ dependencies {
     implementation("com.airbnb.android:lottie:6.1.0")
     implementation("androidx.navigation:navigation-fragment:2.7.2")
     implementation("androidx.navigation:navigation-ui:2.7.2")
-
+    implementation("androidx.room:room-runtime:2.5.2")
+    annotationProcessor("androidx.room:room-compiler:2.5.2")
 }
