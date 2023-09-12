@@ -7,7 +7,7 @@
     android:background="@drawable/mannequin1"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context=".ChooseOutfit">
+    tools:context=".view.ChooseOutfit">
 
 
     <TextView

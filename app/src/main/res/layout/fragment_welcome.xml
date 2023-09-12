@@ -7,7 +7,7 @@
     android:background="@drawable/mannequin1"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context=".Welcome">
+    tools:context=".view.Welcome">
 
     <TextView
         android:id="@+id/welcometosmartwardrob"

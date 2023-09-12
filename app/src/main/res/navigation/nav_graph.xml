@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/splashScreen"
-        android:name="com.example.smartwardrobe.SplashScreen"
+        android:name="com.example.smartwardrobe.view.SplashScreen"
         android:label="fragment_splash_screen"
         tools:layout="@layout/fragment_splash_screen" >
         <action
@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/addGarment"
-        android:name="com.example.smartwardrobe.AddGarment"
+        android:name="com.example.smartwardrobe.view.AddGarment"
         android:label="fragment_add_garment"
         tools:layout="@layout/fragment_add_garment" >
 
@@ -26,7 +26,7 @@
     </fragment>
     <fragment
         android:id="@+id/chooseOutfit"
-        android:name="com.example.smartwardrobe.ChooseOutfit"
+        android:name="com.example.smartwardrobe.view.ChooseOutfit"
         android:label="fragment_choose_outfit"
         tools:layout="@layout/fragment_choose_outfit" >
         <action
@@ -35,17 +35,17 @@
     </fragment>
     <fragment
         android:id="@+id/showOutfit"
-        android:name="com.example.smartwardrobe.ShowOutfit"
+        android:name="com.example.smartwardrobe.view.ShowOutfit"
         android:label="fragment_show_outfit"
         tools:layout="@layout/fragment_show_outfit" />
     <fragment
         android:id="@+id/garmentList"
-        android:name="com.example.smartwardrobe.GarmentList"
+        android:name="com.example.smartwardrobe.view.GarmentList"
         android:label="fragment_garment_list"
         tools:layout="@layout/fragment_garment_list" />
     <fragment
         android:id="@+id/welcome"
-        android:name="com.example.smartwardrobe.Welcome"
+        android:name="com.example.smartwardrobe.view.Welcome"
         android:label="fragment_welcome"
         tools:layout="@layout/fragment_welcome" >
         <action
@@ -64,7 +64,7 @@
     </fragment>
     <fragment
         android:id="@+id/chosenOutfits"
-        android:name="com.example.smartwardrobe.ChosenOutfits"
+        android:name="com.example.smartwardrobe.view.ChosenOutfits"
         android:label="fragment_chosen_outfits"
         tools:layout="@layout/fragment_chosen_outfits" />
 </navigation>

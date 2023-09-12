@@ -1,4 +1,4 @@
-package com.example.smartwardrobe;
+package com.example.smartwardrobe.view;
 
 import android.os.Bundle;
 
@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.smartwardrobe.R;
 import com.example.smartwardrobe.databinding.FragmentAddGarmentBinding;
 
 

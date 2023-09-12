@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="vertical"
-        tools:context=".ChosenOutfits">
+        tools:context=".view.ChosenOutfits">
 
         <TextView
             android:id="@+id/outfitschosen"

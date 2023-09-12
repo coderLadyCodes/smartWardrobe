@@ -16,7 +16,7 @@
         android:theme="@style/Base.Theme.SmartWardrobe"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
+            android:name=".view.MainActivity"
             android:theme="@style/Base.Theme.SmartWardrobe"
             android:exported="true">
             <intent-filter>

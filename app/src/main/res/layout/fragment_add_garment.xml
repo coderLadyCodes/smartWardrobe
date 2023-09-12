@@ -7,7 +7,7 @@
     android:background="@drawable/mannequin1"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context=".AddGarment">
+    tools:context=".view.AddGarment">
 
     <TextView
         android:id="@+id/addyourgarment"
