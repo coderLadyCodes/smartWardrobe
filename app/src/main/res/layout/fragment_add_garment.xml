@@ -44,7 +44,7 @@
             android:contentDescription="@string/add_your_garment"
             android:scaleType="fitCenter"
             android:src="@drawable/baseline_photo_camera_24"
-            app:tint="@color/turquoise" />
+            app:tint="@color/pink" />
 
         <TextView
             android:layout_width="wrap_content"

@@ -2,6 +2,7 @@ package com.example.smartwardrobe.database;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "garment")
@@ -24,9 +25,11 @@ public class Garment {
     @ColumnInfo(name = "warmth")
     private Warmth warmth;
 
+    @Ignore
     public Garment() {
     }
 
+    @Ignore
     public Garment(String photo, Categorization categorization, String color, boolean loose, boolean comfort, boolean fancy, Warmth warmth) {
         this.photo = photo;
         this.categorization = categorization;
