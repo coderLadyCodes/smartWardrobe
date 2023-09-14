@@ -4,9 +4,6 @@ import com.example.smartwardrobe.database.GarmentDAO;
 
 
 public class GarmentRepository {
-    private final GarmentDAO gramentDao;
+    private GarmentDAO gramentDao;
 
-    public GarmentRepository(GarmentDAO gramentDao) {
-        this.gramentDao = gramentDao;
-    }
 }

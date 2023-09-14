@@ -29,19 +29,6 @@ public class AddGarment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        RoomDatabase.Callback myCallBack = new RoomDatabase.Callback() {
-            @Override
-            public void onCreate(@NonNull SupportSQLiteDatabase db) {
-                super.onCreate(db);
-            }
-
-            @Override
-            public void onOpen(@NonNull SupportSQLiteDatabase db) {
-                super.onOpen(db);
-            }
-        };
-
-        garmentDatabase = Room.databaseBuilder(getContext(), GarmentDatabase.class, "garmentDatabase").addCallback(myCallBack).build();
     }
 
     @Override
