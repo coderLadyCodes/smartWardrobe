@@ -14,10 +14,10 @@ public abstract class GarmentDatabase extends RoomDatabase {
     public abstract GarmentDAO garmentDAO();
     private static volatile GarmentDatabase INSTANCE;
     private static final int NUMBER_OF_THREADS = 4;
-    static final ExecutorService databaseWriteExecutor =
+    public static final ExecutorService databaseWriteExecutor =
             Executors.newFixedThreadPool(NUMBER_OF_THREADS);
 
-    static GarmentDatabase getDatabase(final Context context) {
+    public static GarmentDatabase getDatabase(final Context context) {
         if (INSTANCE == null) {
             synchronized (GarmentDatabase.class) {
                 if (INSTANCE == null) {
