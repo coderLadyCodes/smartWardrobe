@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">SmartWardrobe</string>
     <string name="add_your_garment"><b>Add your Garment</b></string>
-    <string name="upload_your_image_here">Upload your image here</string>
+    <string name="take_picture">Take picture</string>
     <string name="category"><b>Category : </b></string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

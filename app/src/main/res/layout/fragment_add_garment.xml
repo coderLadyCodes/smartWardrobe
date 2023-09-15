@@ -25,8 +25,8 @@
 
     <FrameLayout
         android:id="@+id/framelayout"
-        android:layout_width="200dp"
-        android:layout_height="80dp"
+        android:layout_width="150dp"
+        android:layout_height="120dp"
         android:alpha="0.8"
         android:background="@drawable/roundedcorner"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -37,8 +37,9 @@
         app:layout_constraintVertical_bias="0.057">
 
         <ImageButton
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:id="@+id/imagebutton"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_gravity="center"
             android:background="@color/purple"
             android:contentDescription="@string/add_your_garment"
@@ -46,14 +47,21 @@
             android:src="@drawable/baseline_photo_camera_24"
             app:tint="@color/pink" />
 
+        <ImageView
+            android:id="@+id/imageuploaded"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:scaleType="fitCenter"/>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|center"
-            android:gravity="bottom"
-            android:text="@string/upload_your_image_here"
+            android:gravity="center"
+            android:text="@string/take_picture"
             android:textColor="@color/turquoise"
-            android:textSize="14sp" />
+            android:textSize="12sp" />
     </FrameLayout>
 
     <LinearLayout

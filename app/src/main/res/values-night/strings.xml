@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="add_your_garment">Add your Garment</string>
-    <string name="upload_your_image_here">Upload your image here</string>
+    <string name="take_picture">Take picture</string>
     <string name="category"><b>Category : </b></string>
     <string name="welcome_to_smart_wardrobe"><b>Welcome to Smart Wardrobe</b></string>
     <string name="the_app_that_chooses_your_outfit_for_you">The App that Chooses your Outfit for You</string>
