@@ -26,33 +26,26 @@
     <FrameLayout
         android:id="@+id/framelayout"
         android:layout_width="150dp"
-        android:layout_height="120dp"
+        android:layout_height="80dp"
         android:alpha="0.8"
         android:background="@drawable/roundedcorner"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/addyourgarment"
-        app:layout_constraintVertical_bias="0.057">
+        app:layout_constraintVertical_bias="0.029">
 
         <ImageButton
             android:id="@+id/imagebutton"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:layout_gravity="center"
             android:background="@color/purple"
             android:contentDescription="@string/add_your_garment"
             android:scaleType="fitCenter"
             android:src="@drawable/baseline_photo_camera_24"
             app:tint="@color/pink" />
-
-        <ImageView
-            android:id="@+id/imageuploaded"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_gravity="center"
-            android:scaleType="fitCenter"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -64,6 +57,20 @@
             android:textSize="12sp" />
     </FrameLayout>
 
+    <androidx.camera.view.PreviewView
+        android:id="@+id/preView"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_gravity="center"
+        android:scaleType="fitCenter"
+
+        app:layout_constraintBottom_toTopOf="@+id/layoutcategory"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/framelayout"
+        app:layout_constraintVertical_bias="0.5" />
+
     <LinearLayout
         android:id="@+id/layoutcategory"
         android:layout_width="match_parent"
@@ -72,10 +79,10 @@
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.157"
+        app:layout_constraintHorizontal_bias="0.526"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/framelayout"
-        app:layout_constraintVertical_bias="0.022">
+        app:layout_constraintVertical_bias="0.138">
 
         <TextView
             android:id="@+id/category"
@@ -274,22 +281,22 @@
             <RadioButton
                 android:id="@+id/yesfancy"
                 android:layout_width="wrap_content"
-                android:textSize="20sp"
                 android:layout_height="50dp"
                 android:layout_marginEnd="40dp"
                 android:buttonTint="@color/peach"
                 android:text="@string/yes"
-                android:textColor="@color/peach" />
+                android:textColor="@color/peach"
+                android:textSize="20sp" />
 
             <RadioButton
                 android:id="@+id/nofancy"
                 android:layout_width="wrap_content"
-                android:textSize="20sp"
                 android:layout_height="50dp"
                 android:layout_marginEnd="40dp"
                 android:buttonTint="@color/peach"
                 android:text="@string/no"
-                android:textColor="@color/peach" />
+                android:textColor="@color/peach"
+                android:textSize="20sp" />
         </RadioGroup>
 
     </LinearLayout>
@@ -321,14 +328,14 @@
             android:id="@+id/editcolor"
             android:layout_width="0dp"
             android:layout_height="50dp"
-            android:textSize="20sp"
             android:layout_marginEnd="94dp"
             android:layout_weight="2"
             android:backgroundTint="@color/peach"
             android:gravity="center"
             android:hint="@string/color_of_your_item"
             android:spinnerMode="dialog"
-            android:textColorHint="@color/peach" />
+            android:textColorHint="@color/peach"
+            android:textSize="20sp" />
     </LinearLayout>
 
     <Button
@@ -336,9 +343,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
+        android:alpha="0.8"
         android:background="@drawable/button"
         android:padding="20dp"
-        android:alpha="0.8"
         android:text="@string/add_this_garment"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
