@@ -57,20 +57,6 @@
             android:textSize="12sp" />
     </FrameLayout>
 
-    <androidx.camera.view.PreviewView
-        android:id="@+id/preView"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_gravity="center"
-        android:scaleType="fitCenter"
-
-        app:layout_constraintBottom_toTopOf="@+id/layoutcategory"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/framelayout"
-        app:layout_constraintVertical_bias="0.5" />
-
     <LinearLayout
         android:id="@+id/layoutcategory"
         android:layout_width="match_parent"
