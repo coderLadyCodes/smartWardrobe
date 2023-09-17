@@ -3,6 +3,7 @@ package com.example.smartwardrobe.view;
 import static android.app.Activity.RESULT_OK;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -42,6 +43,8 @@ import com.example.smartwardrobe.databinding.FragmentAddGarmentBinding;
 import com.google.common.util.concurrent.ListenableFuture;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -52,6 +55,7 @@ import java.util.concurrent.Executors;
 
 
 public class AddGarment extends Fragment {
+    private ActivityResultLauncher<Intent> cameraLauncher;
     GarmentDatabase garmentDatabase;
     FragmentAddGarmentBinding binding;
 
@@ -102,5 +106,50 @@ public class AddGarment extends Fragment {
 //                activityResultLauncher.launch(intent);
 //            }
 //        });
+        cameraLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+            if (result.getResultCode() == Activity.RESULT_OK) {
+                Intent data = result.getData();
+                if (data != null) {
+                    Bundle extras = data.getExtras();
+                    if (extras != null && extras.containsKey("data")) {
+                        Bitmap imageBitmap = (Bitmap) extras.get("data");
+                        saveImageToExternalStorage(imageBitmap);
+                    }
+                }
+            }
+        });
+
+        binding.imagebutton.setOnClickListener(v -> dispatchTakePictureIntent());
+
+    }
+
+    private void dispatchTakePictureIntent() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(requireActivity().getPackageManager()) != null) {
+            cameraLauncher.launch(takePictureIntent);
+        }
+    }
+
+    private void saveImageToExternalStorage(Bitmap imageBitmap) {
+        // Define a directory for saving the image
+        File directory = new File(requireContext().getExternalFilesDir(null), "photos");
+        if (!directory.exists()) {
+            directory.mkdirs();
+        }
+
+
+        String timeStamp = String.valueOf(System.currentTimeMillis());
+        File imageFile = new File(directory, "IMG_" + timeStamp + ".jpg");
+
+        try {
+            // Save the image to the file
+            FileOutputStream outputStream = new FileOutputStream(imageFile);
+            imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
+            outputStream.close();
+        } catch (
+                IOException e) {
+            e.printStackTrace();
+        }
     }
 }
+
