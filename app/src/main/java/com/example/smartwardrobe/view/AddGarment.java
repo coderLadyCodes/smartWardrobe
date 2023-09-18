@@ -94,62 +94,81 @@ public class AddGarment extends Fragment {
             }
         });
     }
-
-
-
     public void openCamera() {
-        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-            // Request CAMERA permission
-            ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.CAMERA}, CAMERA_PERMISSION_REQUEST_CODE);
-        } else {
-            // Permission is already granted, proceed with opening the camera
-            startCamera();
-        }
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        File photoFile = createImageFile();
-        if (photoFile != null) {
-            mCurrentPhotoUri = FileProvider.getUriForFile(requireContext(), requireContext().getApplicationContext().getPackageName() + ".provider", photoFile);
-            intent.putExtra(MediaStore.EXTRA_OUTPUT, mCurrentPhotoUri);
-            cameraLauncher.launch(intent);
-        }
+        cameraLauncher.launch(intent);
     }
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == CAMERA_PERMISSION_REQUEST_CODE) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                // CAMERA permission granted, proceed with opening the camera
-                startCamera();
-            } else {
-                // Permission denied, handle accordingly (e.g., show a message)
-            }
-        }
-    }
-    private void startCamera() {
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        File photoFile = createImageFile();
-        if (photoFile != null) {
-            mCurrentPhotoUri = FileProvider.getUriForFile(requireContext(), requireContext().getApplicationContext().getPackageName() + ".provider", photoFile);
-            intent.putExtra(MediaStore.EXTRA_OUTPUT, mCurrentPhotoUri);
-            cameraLauncher.launch(intent);
-        }
-    }
-
-
-
     ActivityResultLauncher<Intent> cameraLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
             new ActivityResultCallback<ActivityResult>() {
                 @Override
                 public void onActivityResult(ActivityResult result) {
-                    if (result.getResultCode() == Activity.RESULT_OK) {
-                        // Display the captured image
-                        binding.displayimg.setImageURI(mCurrentPhotoUri);
-
-                        // Save the captured image to external storage
-                        saveImageToExternalStorage(mCurrentPhotoUri);
+                    if (result.getResultCode() == Activity.RESULT_OK && result.getData() != null) {
+                        Bundle bundle = result.getData().getExtras();
+                        if (bundle != null) {
+                            Bitmap bitmap = (Bitmap) bundle.get("data");
+                            if (bitmap != null) {
+                                binding.displayimg.setImageBitmap(bitmap);
+                            }
+                        }
                     }
                 }
             });
+
+
+
+//    public void openCamera() {
+//        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+//            // Request CAMERA permission
+//            ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.CAMERA}, CAMERA_PERMISSION_REQUEST_CODE);
+//        } else {
+//            // Permission is already granted, proceed with opening the camera
+//            startCamera();
+//        }
+//        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//        File photoFile = createImageFile();
+//        if (photoFile != null) {
+//            mCurrentPhotoUri = FileProvider.getUriForFile(requireContext(), requireContext().getApplicationContext().getPackageName() + ".provider", photoFile);
+//            intent.putExtra(MediaStore.EXTRA_OUTPUT, mCurrentPhotoUri);
+//            cameraLauncher.launch(intent);
+//        }
+//    }
+//    @Override
+//    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+//        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+//        if (requestCode == CAMERA_PERMISSION_REQUEST_CODE) {
+//            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//                // CAMERA permission granted, proceed with opening the camera
+//                startCamera();
+//            } else {
+//                // Permission denied, handle accordingly (e.g., show a message)
+//            }
+//        }
+//    }
+//    private void startCamera() {
+//        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//        File photoFile = createImageFile();
+//        if (photoFile != null) {
+//            mCurrentPhotoUri = FileProvider.getUriForFile(requireContext(), requireContext().getApplicationContext().getPackageName() + ".provider", photoFile);
+//            intent.putExtra(MediaStore.EXTRA_OUTPUT, mCurrentPhotoUri);
+//            cameraLauncher.launch(intent);
+//        }
+//    }
+//
+//
+//
+//    ActivityResultLauncher<Intent> cameraLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+//            new ActivityResultCallback<ActivityResult>() {
+//                @Override
+//                public void onActivityResult(ActivityResult result) {
+//                    if (result.getResultCode() == Activity.RESULT_OK) {
+//                        // Display the captured image
+//                        binding.displayimg.setImageURI(mCurrentPhotoUri);
+//
+//                        // Save the captured image to external storage
+//                        saveImageToExternalStorage(mCurrentPhotoUri);
+//                    }
+//                }
+//            });
 
 //    private File createImageFile() throws IOException {
 //        @SuppressLint("SimpleDateFormat") String timeStamp = new SimpleDateFormat("yyyyMMdd").format(new Date());
@@ -164,32 +183,32 @@ public class AddGarment extends Fragment {
 //        return image;
 //    }
 
-    private File createImageFile() {
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "JPEG_" + timeStamp + "_";
-        File storageDir = requireContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        File imageFile = null;
-        try {
-            imageFile = File.createTempFile(imageFileName, ".jpg", storageDir);
-            mCurrentPhotoPath = imageFile.getAbsolutePath();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return imageFile;
-    }
-
-    private void saveImageToExternalStorage(Uri imageUri) {
-        // Use a FileOutputStream to save the image to external storage
-        try {
-            File file = new File(requireContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES), "my_image.jpg");
-            FileOutputStream outputStream = new FileOutputStream(file);
-            Bitmap bitmap = MediaStore.Images.Media.getBitmap(requireActivity().getContentResolver(), imageUri);
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
-            outputStream.flush();
-            outputStream.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+//    private File createImageFile() {
+//        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+//        String imageFileName = "JPEG_" + timeStamp + "_";
+//        File storageDir = requireContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+//        File imageFile = null;
+//        try {
+//            imageFile = File.createTempFile(imageFileName, ".jpg", storageDir);
+//            mCurrentPhotoPath = imageFile.getAbsolutePath();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        return imageFile;
+//    }
+//
+//    private void saveImageToExternalStorage(Uri imageUri) {
+//        // Use a FileOutputStream to save the image to external storage
+//        try {
+//            File file = new File(requireContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES), "my_image.jpg");
+//            FileOutputStream outputStream = new FileOutputStream(file);
+//            Bitmap bitmap = MediaStore.Images.Media.getBitmap(requireActivity().getContentResolver(), imageUri);
+//            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
+//            outputStream.flush();
+//            outputStream.close();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
 }
 
