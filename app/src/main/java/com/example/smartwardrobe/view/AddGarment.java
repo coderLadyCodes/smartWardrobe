@@ -1,61 +1,61 @@
 package com.example.smartwardrobe.view;
 
-import static android.app.Activity.RESULT_OK;
-
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.camera.core.Camera;
-import androidx.camera.core.CameraSelector;
-import androidx.camera.core.ImageCapture;
-import androidx.camera.core.ImageCaptureException;
-import androidx.camera.core.Preview;
-import androidx.camera.lifecycle.ProcessCameraProvider;
+
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.navigation.Navigation;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
-import androidx.sqlite.db.SupportSQLiteDatabase;
+
 
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.util.Log;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+
 
 
 import com.example.smartwardrobe.R;
 import com.example.smartwardrobe.database.GarmentDatabase;
 import com.example.smartwardrobe.databinding.FragmentAddGarmentBinding;
-import com.google.common.util.concurrent.ListenableFuture;
+
 
 import java.io.File;
+
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Locale;
-import java.util.Objects;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
 
 
 public class AddGarment extends Fragment {
-    private ActivityResultLauncher<Intent> cameraLauncher;
+    private static final int CAMERA_PERMISSION_REQUEST_CODE = 1001;
+    File photoFile;
+
+    File image;
+    private String mCurrentPhotoPath;
+    private Uri mCurrentPhotoUri;
     GarmentDatabase garmentDatabase;
     FragmentAddGarmentBinding binding;
 
@@ -85,69 +85,109 @@ public class AddGarment extends Fragment {
                 Navigation.findNavController(view).navigate(R.id.action_addGarment_to_garmentList);
             }
         });
+        // TAKE IMAGE
+        binding.imagebutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
-        // TAKE IMAGE FROM camerax
-//
-//        ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
-//                new ActivityResultContracts.StartActivityForResult(),
-//                result -> {
-//                    if (result.getResultCode() == RESULT_OK && result.getData() != null){
-//                        Bundle bundle = result.getData().getExtras();
-//                        Bitmap bitmap = (Bitmap) bundle.get("data");
-//                        binding.imageuploaded.setImageBitmap(bitmap);
-//                    }
-//                }
-//        );
-//
-//        binding.imagebutton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//                activityResultLauncher.launch(intent);
-//            }
-//        });
-        cameraLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
-            if (result.getResultCode() == Activity.RESULT_OK) {
-                Intent data = result.getData();
-                if (data != null) {
-                    Bundle extras = data.getExtras();
-                    if (extras != null && extras.containsKey("data")) {
-                        Bitmap imageBitmap = (Bitmap) extras.get("data");
-                        saveImageToExternalStorage(imageBitmap);
-                    }
-                }
+                openCamera();
             }
         });
-
-        binding.imagebutton.setOnClickListener(v -> dispatchTakePictureIntent());
-
     }
 
-    private void dispatchTakePictureIntent() {
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if (takePictureIntent.resolveActivity(requireActivity().getPackageManager()) != null) {
-            cameraLauncher.launch(takePictureIntent);
+
+
+    public void openCamera() {
+        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            // Request CAMERA permission
+            ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.CAMERA}, CAMERA_PERMISSION_REQUEST_CODE);
+        } else {
+            // Permission is already granted, proceed with opening the camera
+            startCamera();
+        }
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        File photoFile = createImageFile();
+        if (photoFile != null) {
+            mCurrentPhotoUri = FileProvider.getUriForFile(requireContext(), requireContext().getApplicationContext().getPackageName() + ".provider", photoFile);
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, mCurrentPhotoUri);
+            cameraLauncher.launch(intent);
+        }
+    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == CAMERA_PERMISSION_REQUEST_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // CAMERA permission granted, proceed with opening the camera
+                startCamera();
+            } else {
+                // Permission denied, handle accordingly (e.g., show a message)
+            }
+        }
+    }
+    private void startCamera() {
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        File photoFile = createImageFile();
+        if (photoFile != null) {
+            mCurrentPhotoUri = FileProvider.getUriForFile(requireContext(), requireContext().getApplicationContext().getPackageName() + ".provider", photoFile);
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, mCurrentPhotoUri);
+            cameraLauncher.launch(intent);
         }
     }
 
-    private void saveImageToExternalStorage(Bitmap imageBitmap) {
-        // Define a directory for saving the image
-        File directory = new File(requireContext().getExternalFilesDir(null), "photos");
-        if (!directory.exists()) {
-            directory.mkdirs();
-        }
 
 
-        String timeStamp = String.valueOf(System.currentTimeMillis());
-        File imageFile = new File(directory, "IMG_" + timeStamp + ".jpg");
+    ActivityResultLauncher<Intent> cameraLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        // Display the captured image
+                        binding.displayimg.setImageURI(mCurrentPhotoUri);
 
+                        // Save the captured image to external storage
+                        saveImageToExternalStorage(mCurrentPhotoUri);
+                    }
+                }
+            });
+
+//    private File createImageFile() throws IOException {
+//        @SuppressLint("SimpleDateFormat") String timeStamp = new SimpleDateFormat("yyyyMMdd").format(new Date());
+//        String imageFileName = "VialData_" + timeStamp + "_";
+//        File storageDir = requireContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+//        File image = File.createTempFile(
+//                imageFileName,
+//                ".jpg",
+//                storageDir
+//        );
+//        mCurrentPhotoPath = image.getAbsolutePath();
+//        return image;
+//    }
+
+    private File createImageFile() {
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = requireContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File imageFile = null;
         try {
-            // Save the image to the file
-            FileOutputStream outputStream = new FileOutputStream(imageFile);
-            imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
+            imageFile = File.createTempFile(imageFileName, ".jpg", storageDir);
+            mCurrentPhotoPath = imageFile.getAbsolutePath();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return imageFile;
+    }
+
+    private void saveImageToExternalStorage(Uri imageUri) {
+        // Use a FileOutputStream to save the image to external storage
+        try {
+            File file = new File(requireContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES), "my_image.jpg");
+            FileOutputStream outputStream = new FileOutputStream(file);
+            Bitmap bitmap = MediaStore.Images.Media.getBitmap(requireActivity().getContentResolver(), imageUri);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
+            outputStream.flush();
             outputStream.close();
-        } catch (
-                IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
