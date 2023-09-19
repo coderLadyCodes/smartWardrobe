@@ -9,7 +9,9 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 
+import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.Path;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -53,7 +55,6 @@ import java.util.Objects;
 
 
 public class AddGarment extends Fragment {
-
     GarmentDatabase garmentDatabase;
     FragmentAddGarmentBinding binding;
 
@@ -64,7 +65,6 @@ public class AddGarment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //prepar the adapter ( for non graphical )
     }
 
     @Override
@@ -83,7 +83,9 @@ public class AddGarment extends Fragment {
                 Navigation.findNavController(view).navigate(R.id.action_addGarment_to_garmentList);
             }
         });
-                         // TAKE IMAGE AND STORE IN IN FILE DIRECTORY
+
+////////////////////////////////// TAKE PHOTO WITH PHONE CAMERA AND STORE IT IN FILE DIRECTORY/////////////////////////////////
+
         binding.imagebutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -110,6 +112,8 @@ public class AddGarment extends Fragment {
                                         contentValues.put(MediaStore.MediaColumns.MIME_TYPE, "image/jpg");
                                         Uri imageUri = resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);
                                         fos = resolver.openOutputStream(Objects.requireNonNull(imageUri));
+                                        String imagePath = getRealPathFromUri(imageUri);
+                                        Log.d("Image Path", imagePath);
                                         assert fos != null;
                                         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
                                         Objects.requireNonNull(fos);
@@ -117,6 +121,7 @@ public class AddGarment extends Fragment {
                                 } catch (FileNotFoundException e) {
                                     throw new RuntimeException(e);
                                 }
+
                                 binding.displayimg.setImageBitmap(bitmap);
                             }
                         }
@@ -124,6 +129,18 @@ public class AddGarment extends Fragment {
                 }
             }
     );
+    public String getRealPathFromUri(Uri uri) {
+        String[] projection = {MediaStore.Images.Media.DATA};
+        Cursor cursor = requireContext().getContentResolver().query(uri, projection, null, null, null);
+        assert cursor != null;
+        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        cursor.moveToFirst();
+        String filePath = cursor.getString(column_index);
+        cursor.close();
+        return filePath;
+    }
+
+
     public void openCamera() {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         cameraLauncher.launch(intent);

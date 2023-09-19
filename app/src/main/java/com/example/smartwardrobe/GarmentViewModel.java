@@ -13,7 +13,7 @@ import java.util.List;
 
 public class GarmentViewModel extends AndroidViewModel{
 
-    private GarmentRepository garmentRepository;
+    private final GarmentRepository garmentRepository;
     private final LiveData<List<Garment>> allGarments;
     public GarmentViewModel(@NonNull Application application) {
         super(application);
