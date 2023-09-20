@@ -36,10 +36,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 
 
 import com.example.smartwardrobe.R;
+import com.example.smartwardrobe.database.Categorization;
 import com.example.smartwardrobe.database.GarmentDatabase;
+import com.example.smartwardrobe.database.Warmth;
 import com.example.smartwardrobe.databinding.FragmentAddGarmentBinding;
 
 
@@ -89,10 +93,26 @@ public class AddGarment extends Fragment {
         binding.imagebutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-            openCamera();
+                openCamera();
             }
         });
+
+        /////////////////////////////////////// SPINNER CATEGORY///////////////////////////////////////////
+        ArrayAdapter<Categorization> adapter = new ArrayAdapter<>(requireContext() , R.layout.my_spinner, Categorization.values());
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        binding.spinnercategory.setAdapter(adapter);
+
+        /////////////////////////////////////// SPINNER WARMTH///////////////////////////////////////////
+        ArrayAdapter<Warmth> adapter1 = new ArrayAdapter<>(requireContext(), R.layout.my_spinner, Warmth.values());
+        adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        binding.spinnerwarmth.setAdapter(adapter1);
+
     }
+
+
+
+    ////////////////////////////////// TAKE PHOTO WITH PHONE CAMERA AND STORE IT IN FILE DIRECTORY/////////////////////////////////
+
     ActivityResultLauncher<Intent> cameraLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             new ActivityResultCallback<ActivityResult>() {
@@ -104,8 +124,8 @@ public class AddGarment extends Fragment {
                             Bitmap bitmap = (Bitmap) bundle.get("data");
                             if (bitmap != null) {
                                 OutputStream fos;
-                                try{
-                                    if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                                try {
+                                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                                         ContentResolver resolver = requireContext().getContentResolver();
                                         ContentValues contentValues = new ContentValues();
                                         contentValues.put(MediaStore.MediaColumns.DISPLAY_NAME, "Images" + ".jpg");
@@ -127,8 +147,8 @@ public class AddGarment extends Fragment {
                         }
                     }
                 }
-            }
-    );
+            });
+
     public String getRealPathFromUri(Uri uri) {
         String[] projection = {MediaStore.Images.Media.DATA};
         Cursor cursor = requireContext().getContentResolver().query(uri, projection, null, null, null);
@@ -139,9 +159,10 @@ public class AddGarment extends Fragment {
         cursor.close();
         return filePath;
     }
-
-
     public void openCamera() {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         cameraLauncher.launch(intent);
-    } }
+    }
+
+}
+
