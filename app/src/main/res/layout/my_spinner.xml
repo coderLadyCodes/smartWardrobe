@@ -5,7 +5,6 @@
     android:textColor="@color/peach"
     android:textSize="18sp"
     android:textStyle="bold|italic"
-    android:gravity="center"
-    >
+    android:gravity="center">
 
 </TextView>

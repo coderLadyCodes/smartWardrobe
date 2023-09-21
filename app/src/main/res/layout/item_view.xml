@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp">
+
+    <ImageView
+        android:id="@+id/clothimage"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/clothcategory"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.5" />
+
+    <TextView
+        android:id="@+id/clothcategory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/turquoise"
+        android:textStyle="bold|italic"
+        app:layout_constraintBottom_toTopOf="@+id/clothwarmth"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/clothimage"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.5"
+        tools:text="Category" />
+
+    <TextView
+        android:id="@+id/clothwarmth"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/turquoise"
+        android:textStyle="bold|italic"
+        app:layout_constraintBottom_toTopOf="@+id/clotcomfort"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/clothimage"
+        app:layout_constraintTop_toBottomOf="@+id/clothcategory"
+        app:layout_constraintVertical_bias="0.5"
+        tools:text="Warmth" />
+
+    <TextView
+        android:id="@+id/clotcomfort"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/turquoise"
+        android:textStyle="bold|italic"
+        app:layout_constraintBottom_toTopOf="@+id/clotloose"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/clothimage"
+        app:layout_constraintTop_toBottomOf="@+id/clothwarmth"
+        app:layout_constraintVertical_bias="0.5"
+        tools:text="Comfort" />
+
+    <TextView
+        android:id="@+id/clotloose"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/turquoise"
+        android:textStyle="bold|italic"
+        app:layout_constraintBottom_toTopOf="@+id/clotfancy"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/clothimage"
+        app:layout_constraintTop_toBottomOf="@+id/clotcomfort"
+        app:layout_constraintVertical_bias="0.5"
+        tools:text="Loose" />
+
+    <TextView
+        android:id="@+id/clotfancy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/turquoise"
+        android:textStyle="bold|italic"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/clothimage"
+        app:layout_constraintTop_toBottomOf="@+id/clotloose"
+        app:layout_constraintVertical_bias="0.5"
+        tools:text="Fancy" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/pink"
+        android:layout_marginTop="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/clothimage"
+        app:layout_constraintVertical_bias="0.5" />
+</androidx.constraintlayout.widget.ConstraintLayout>

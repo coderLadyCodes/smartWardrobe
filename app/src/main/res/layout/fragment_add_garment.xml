@@ -331,6 +331,7 @@
             android:gravity="center"
             android:hint="@string/color_of_your_item"
             android:spinnerMode="dialog"
+            android:textColor="@color/peach"
             android:textColorHint="@color/peach"
             android:textSize="20sp" />
     </LinearLayout>
