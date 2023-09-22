@@ -38,6 +38,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Toast;
 
 
 import com.example.smartwardrobe.R;
@@ -59,6 +60,7 @@ import java.util.Objects;
 
 
 public class AddGarment extends Fragment {
+    String imagePath;
     GarmentDatabase garmentDatabase;
     FragmentAddGarmentBinding binding;
 
@@ -84,6 +86,23 @@ public class AddGarment extends Fragment {
         binding.buttonaddgarment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String imagesPath = imagePath.toString();
+                long selectedCategory = binding.spinnercategory.getSelectedItemId();
+                long selectedWarmth = binding.spinnerwarmth.getSelectedItemId();
+                int selectedComfort = binding.layoutcomfortradio.getCheckedRadioButtonId();
+                int selectedLoose = binding.layoutlooseradio.getCheckedRadioButtonId();
+                int selectedFancy = binding.layoutfancyradio.getCheckedRadioButtonId();
+                String colors = binding.editcolor.getText().toString();
+
+                if(imagesPath.isEmpty()){
+                    Toast.makeText(getContext(), "Please Load an Image", Toast.LENGTH_SHORT).show();
+                }else if((selectedCategory == -1) || (selectedWarmth == -1) || (selectedComfort == -1)
+                        || (selectedLoose == -1) || (selectedFancy == -1)) {
+                    Toast.makeText(getContext(), "Please make a choise", Toast.LENGTH_SHORT).show();
+                } else if(colors.isEmpty()){
+                    Toast.makeText(getContext(), "Please Choose a color", Toast.LENGTH_SHORT).show();
+                }
+
                 Navigation.findNavController(view).navigate(R.id.action_addGarment_to_garmentList);
             }
         });
@@ -132,7 +151,7 @@ public class AddGarment extends Fragment {
                                         contentValues.put(MediaStore.MediaColumns.MIME_TYPE, "image/jpg");
                                         Uri imageUri = resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);
                                         fos = resolver.openOutputStream(Objects.requireNonNull(imageUri));
-                                        String imagePath = getRealPathFromUri(imageUri);
+                                        imagePath = getRealPathFromUri(imageUri);
                                         Log.d("Image Path", imagePath);
                                         assert fos != null;
                                         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);

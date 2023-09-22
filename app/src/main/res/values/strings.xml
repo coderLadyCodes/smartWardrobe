@@ -28,5 +28,7 @@
     <string name="i_want_to_chose_my_outfit">I want To Chose My Outfit</string>
     <string name="previous_outfits_chosen"><b>Previous Outfits Chosen</b></string>
     <string name="here_is_a_list_of_my_outfits">Here is a List of My outfits</string>
+    <string name="modify">Modify</string>
+    <string name="delete">Delete</string>
 
 </resources>
