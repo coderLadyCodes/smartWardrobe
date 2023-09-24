@@ -22,7 +22,7 @@ public abstract class GarmentDatabase extends RoomDatabase {
             synchronized (GarmentDatabase.class) {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                                    GarmentDatabase.class, "word_database")
+                                    GarmentDatabase.class, "garment_database")
                             .build();
                 }
             }
