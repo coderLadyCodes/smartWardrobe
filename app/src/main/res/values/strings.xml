@@ -30,5 +30,6 @@
     <string name="here_is_a_list_of_my_outfits">Here is a List of My outfits</string>
     <string name="modify">Modify</string>
     <string name="delete">Delete</string>
+    <string name="colors">Color</string>
 
 </resources>

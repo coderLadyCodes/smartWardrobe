@@ -3,13 +3,28 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="10dp">
+    android:layout_height="160dp"
+    android:layout_marginTop="10dp"
+    tools:layout_editor_absoluteY="10dp">
+
+    <TextView
+        android:id="@+id/clothcolor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/colors"
+        android:textColor="@color/turquoise"
+        android:textStyle="bold|italic"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintEnd_toStartOf="@+id/delete"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/clothimage"
+        app:layout_constraintTop_toBottomOf="@+id/clothfancy"
+        app:layout_constraintVertical_bias="0.5" />
 
     <ImageView
         android:id="@+id/clothimage"
         android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_height="120dp"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toStartOf="@+id/clothcategory"
         app:layout_constraintHorizontal_bias="0.5"
@@ -37,7 +52,7 @@
         android:layout_height="wrap_content"
         android:textColor="@color/turquoise"
         android:textStyle="bold|italic"
-        app:layout_constraintBottom_toTopOf="@+id/clotcomfort"
+        app:layout_constraintBottom_toTopOf="@+id/clothcomfort"
         app:layout_constraintEnd_toStartOf="@+id/modify"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/clothimage"
@@ -46,12 +61,12 @@
         tools:text="Warmth" />
 
     <TextView
-        android:id="@+id/clotcomfort"
+        android:id="@+id/clothcomfort"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/turquoise"
         android:textStyle="bold|italic"
-        app:layout_constraintBottom_toTopOf="@+id/clotloose"
+        app:layout_constraintBottom_toTopOf="@+id/clothloose"
         app:layout_constraintEnd_toStartOf="@+id/modify"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/clothimage"
@@ -60,32 +75,46 @@
         tools:text="Comfort" />
 
     <TextView
-        android:id="@+id/clotloose"
+        android:id="@+id/clothloose"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/turquoise"
         android:textStyle="bold|italic"
-        app:layout_constraintBottom_toTopOf="@+id/clotfancy"
+        app:layout_constraintBottom_toTopOf="@+id/clothfancy"
         app:layout_constraintEnd_toStartOf="@+id/delete"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/clothimage"
-        app:layout_constraintTop_toBottomOf="@+id/clotcomfort"
+        app:layout_constraintTop_toBottomOf="@+id/clothcomfort"
         app:layout_constraintVertical_bias="0.5"
         tools:text="Loose" />
 
     <TextView
-        android:id="@+id/clotfancy"
+        android:id="@+id/clothfancy"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/turquoise"
         android:textStyle="bold|italic"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintBottom_toTopOf="@+id/clothcolor"
         app:layout_constraintEnd_toStartOf="@+id/delete"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/clothimage"
-        app:layout_constraintTop_toBottomOf="@+id/clotloose"
+        app:layout_constraintTop_toBottomOf="@+id/clothloose"
         app:layout_constraintVertical_bias="0.5"
         tools:text="Fancy" />
+
+    <Button
+        android:id="@+id/delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button"
+        android:text="@string/delete"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/clothloose"
+        app:layout_constraintTop_toBottomOf="@+id/modify"
+        app:layout_constraintVertical_bias="0.5" />
 
     <Button
         android:id="@+id/modify"
@@ -101,25 +130,11 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.5" />
 
-    <Button
-        android:id="@+id/delete"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/button"
-        android:text="@string/delete"
-        android:textColor="@color/white"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/clotcomfort"
-        app:layout_constraintTop_toBottomOf="@+id/modify"
-        app:layout_constraintVertical_bias="0.5" />
-
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="2dp"
-        android:layout_marginTop="10dp"
+
         android:background="@color/pink"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"

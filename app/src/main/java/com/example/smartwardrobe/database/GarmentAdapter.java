@@ -1,5 +1,9 @@
 package com.example.smartwardrobe.database;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,11 +17,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GarmentAdapter  extends RecyclerView.Adapter<GarmentAdapter.GarmentViewHolder> {
-    private List<Garment> garments = new ArrayList<>();
+    private List<Garment> garmentList;
 
-    public void setGarments(List<Garment> garments) {
-        this.garments = garments;
-        notifyDataSetChanged();
+
+    public GarmentAdapter(List<Garment> garmentList) {
+        this.garmentList = garmentList;
     }
 
     @NonNull
@@ -27,15 +31,26 @@ public class GarmentAdapter  extends RecyclerView.Adapter<GarmentAdapter.Garment
         return new GarmentViewHolder(binding);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull GarmentViewHolder holder, int position) {
-     Garment currentGarment = garments.get(position);
-     holder.bind(currentGarment);
+     Garment garment = garmentList.get(position);
+
+     Bitmap bitmap = BitmapFactory.decodeFile(garment.getPhoto());
+     holder.binding.clothimage.setImageBitmap(bitmap);
+     holder.binding.clothcategory.setText(garment.getCategorization().ordinal());
+     holder.binding.clothwarmth.setText(garment.getWarmth().ordinal());
+     holder.binding.clothcomfort.setText("Comfort: " + garment.isComfort());
+     holder.binding.clothloose.setText("Loose: " + garment.isLoose());
+     holder.binding.clothfancy.setText("Fancy: " + garment.isFancy());
+     holder.binding.clothloose.setText("Loose: " + garment.isLoose());
+     holder.binding.clothcolor.setText("Color : " + garment.getColor());
+        holder.bind(garment);
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return garmentList.size();
     }
 
     static class GarmentViewHolder extends RecyclerView.ViewHolder {
@@ -45,8 +60,18 @@ public class GarmentAdapter  extends RecyclerView.Adapter<GarmentAdapter.Garment
             this.binding = binding;
         }
 
+
+        @SuppressLint("SetTextI18n")
         public void bind(Garment garment) {
             binding.clothcategory.setText("Category: " + garment.getCategorization().toString());
+            binding.clothwarmth.setText("Warmth: " + garment.getWarmth().toString());
+            binding.clothcomfort.setText("Comfort: " + garment.isComfort());
+            binding.clothloose.setText("Loose: " + garment.isLoose());
+            binding.clothfancy.setText("Fancy: " + garment.isFancy());
+            binding.clothloose.setText("Loose: " + garment.isLoose());
+            binding.clothcolor.setText("Color : " + garment.getColor());
+            Bitmap bitmap = BitmapFactory.decodeFile(garment.getPhoto());
+            binding.clothimage.setImageBitmap(bitmap);
         }
 
 

@@ -20,7 +20,7 @@ public class GarmentViewModel extends AndroidViewModel{
         garmentRepository = new GarmentRepository(application);
         allGarments = garmentRepository.getListGarments();
     }
-    LiveData<List<Garment>> getListGarments(){
+    public LiveData<List<Garment>> getListGarments(){
         return allGarments;
     }
     public void addGarment(Garment garment){
