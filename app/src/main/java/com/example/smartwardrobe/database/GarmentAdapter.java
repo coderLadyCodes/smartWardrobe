@@ -17,12 +17,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GarmentAdapter  extends RecyclerView.Adapter<GarmentAdapter.GarmentViewHolder> {
-    private List<Garment> garmentList;
+    private final List<Garment> garmentList;
+    GarmentDAO garmentDAO;
 
 
     public GarmentAdapter(List<Garment> garmentList) {
         this.garmentList = garmentList;
     }
+    public void deleteGarment(Garment garment) {
+        garmentDAO.deleteGarment(garment);
+    }
+
+    public void updateGarment(Garment garment) {
+        garmentDAO.updateGarment(garment);
+    }
+
 
     @NonNull
     @Override
@@ -38,14 +47,20 @@ public class GarmentAdapter  extends RecyclerView.Adapter<GarmentAdapter.Garment
 
      Bitmap bitmap = BitmapFactory.decodeFile(garment.getPhoto());
      holder.binding.clothimage.setImageBitmap(bitmap);
-     holder.binding.clothcategory.setText(garment.getCategorization().ordinal());
-     holder.binding.clothwarmth.setText(garment.getWarmth().ordinal());
+     holder.binding.clothcategory.setText(garment.getCategorization().toString());
+     holder.binding.clothwarmth.setText(garment.getWarmth().toString());
      holder.binding.clothcomfort.setText("Comfort: " + garment.isComfort());
      holder.binding.clothloose.setText("Loose: " + garment.isLoose());
      holder.binding.clothfancy.setText("Fancy: " + garment.isFancy());
      holder.binding.clothloose.setText("Loose: " + garment.isLoose());
      holder.binding.clothcolor.setText("Color : " + garment.getColor());
         holder.bind(garment);
+    }
+
+    public void setGarments(List<Garment> garments){
+        garmentList.clear();
+        garmentList.addAll(garments);
+        notifyDataSetChanged();
     }
 
     @Override
@@ -72,6 +87,9 @@ public class GarmentAdapter  extends RecyclerView.Adapter<GarmentAdapter.Garment
             binding.clothcolor.setText("Color : " + garment.getColor());
             Bitmap bitmap = BitmapFactory.decodeFile(garment.getPhoto());
             binding.clothimage.setImageBitmap(bitmap);
+
+//            binding.modify.setOnClickListener(v -> listener.updateGarment(getAbsoluteAdapterPosition()));
+//            binding.delete.setOnClickListener(v -> listener.deleteGarment(getAbsoluteAdapterPosition()));
         }
 
 

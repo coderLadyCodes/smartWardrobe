@@ -1,39 +1,15 @@
 package com.example.smartwardrobe.view;
-
-import static android.content.ContentValues.TAG;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.ContentValues;
-import android.content.Context;
 import android.content.Intent;
-
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.Path;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
-import androidx.annotation.RequiresApi;
-import androidx.core.content.FileProvider;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.Navigation;
-import androidx.room.Room;
-
-
-import android.os.Environment;
 import android.provider.MediaStore;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,34 +18,46 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.content.FileProvider;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
+import androidx.room.Room;
 
 import com.example.smartwardrobe.GarmentViewModel;
 import com.example.smartwardrobe.R;
 import com.example.smartwardrobe.database.Categorization;
 import com.example.smartwardrobe.database.Garment;
+import com.example.smartwardrobe.database.GarmentAdapter;
 import com.example.smartwardrobe.database.GarmentDAO;
 import com.example.smartwardrobe.database.GarmentDatabase;
 import com.example.smartwardrobe.database.Warmth;
 import com.example.smartwardrobe.databinding.FragmentAddGarmentBinding;
 
-
 import java.io.File;
-
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
-
 
 public class AddGarment extends Fragment {
     String imagePath;
     private GarmentDatabase garmentDatabase;
     private GarmentDAO garmentDAO;
-    private GarmentViewModel garmentViewModel;
+    private GarmentViewModel mgarmentViewModel;
     FragmentAddGarmentBinding binding;
+    GarmentAdapter adapter;
 
     public AddGarment() {
 
@@ -84,44 +72,48 @@ public class AddGarment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentAddGarmentBinding.inflate(inflater, container, false);
+
         return binding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        garmentViewModel = new ViewModelProvider(this).get(GarmentViewModel.class);
+
+        mgarmentViewModel = new ViewModelProvider(this).get(GarmentViewModel.class);
         garmentDatabase = GarmentDatabase.getDatabase(requireContext());
         garmentDAO = garmentDatabase.garmentDAO();
+        initSpinners();
+
         binding.buttonaddgarment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                addGarment();
+                      addGarment();
             }
         });
 
-////////////////////////////////// TAKE PHOTO WITH PHONE CAMERA AND STORE IT IN FILE DIRECTORY/////////////////////////////////
-
+        // Capture photo
         binding.imagebutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 openCamera();
             }
         });
-
-        /////////////////////////////////////// SPINNER CATEGORY///////////////////////////////////////////
-        ArrayAdapter<Categorization> adapter = new ArrayAdapter<>(requireContext() , R.layout.my_spinner, Categorization.values());
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        binding.spinnercategory.setAdapter(adapter);
-
-        /////////////////////////////////////// SPINNER WARMTH///////////////////////////////////////////
-        ArrayAdapter<Warmth> adapter1 = new ArrayAdapter<>(requireContext(), R.layout.my_spinner, Warmth.values());
-        adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        binding.spinnerwarmth.setAdapter(adapter1);
     }
 
-    ///////////////////////////GET DATA FROM THE FORM////////////////////////
+    private void initSpinners() {
+        // Initialize Spinner for Category
+        ArrayAdapter<Categorization> categoryAdapter = new ArrayAdapter<>(requireContext(), R.layout.my_spinner, Categorization.values());
+        categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        binding.spinnercategory.setAdapter(categoryAdapter);
+
+        // Initialize Spinner for Warmth
+        ArrayAdapter<Warmth> warmthAdapter = new ArrayAdapter<>(requireContext(), R.layout.my_spinner, Warmth.values());
+        warmthAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        binding.spinnerwarmth.setAdapter(warmthAdapter);
+    }
+
     private void addGarment() {
+        // Get data from the form
         String photo = imagePath;
         String selectedCategory = binding.spinnercategory.getSelectedItem().toString();
         String selectedWarmth = binding.spinnerwarmth.getSelectedItem().toString();
@@ -130,55 +122,60 @@ public class AddGarment extends Fragment {
         int selectedFancy = binding.layoutfancyradio.getCheckedRadioButtonId();
         String colors = binding.editcolor.getText().toString();
 
+        boolean isValid = true;
+
+        // Perform form validation checks
         if (photo.isEmpty()) {
-            Toast.makeText(getContext(), "Please Load an Image", Toast.LENGTH_SHORT).show();
-            return;
-        } else if ((selectedComfort == -1) || (selectedLoose == -1) || (selectedFancy == -1)) {
-            Toast.makeText(getContext(), "Please make a choise", Toast.LENGTH_SHORT).show();
-            return;
-        } else if (colors.isEmpty()) {
-            Toast.makeText(getContext(), "Please Choose a color", Toast.LENGTH_SHORT).show();
+            isValid = false;
+            binding.editcolor.setError("Please Load an Image");
+        }
+
+        if (selectedComfort == -1 || selectedLoose == -1 || selectedFancy == -1) {
+            isValid = false;
+            Toast.makeText(getContext(), "Please make a choice", Toast.LENGTH_SHORT).show();
+        }
+
+        if (colors.isEmpty()) {
+            isValid = false;
+            binding.editcolor.setError("Please Choose a color");
+        }
+
+        if (!isValid) {
+            // Validation failed, return without adding the garment
             return;
         }
+
+
+        // Convert selectedComfort, selectedLoose, and selectedFancy to strings
         String comfort = selectedComfort == R.id.yescomfort ? "Is Comfortable" : "Not Comfortable";
         String loose = selectedLoose == R.id.yesloose ? "Is Loose" : "Not Loose";
         String fancy = selectedFancy == R.id.yesfancy ? "Is Fancy" : "Not Fancy";
 
-        Garment garment = new Garment(photo, Categorization.valueOf(selectedCategory),colors,selectedLoose == R.id.yesloose,
-                selectedComfort == R.id.yescomfort,
-                selectedFancy == R.id.yesfancy, Warmth.valueOf(selectedWarmth));
-        garmentDAO.addGarment(garment);
+        // Create a Garment object
+        Garment garment = new Garment(photo, Categorization.valueOf(selectedCategory), colors, selectedLoose == R.id.yesloose,
+                selectedComfort == R.id.yescomfort, selectedFancy == R.id.yesfancy, Warmth.valueOf(selectedWarmth));
 
-        garmentViewModel.addGarment(garment);
-        garmentDatabase = GarmentDatabase.getDatabase(requireContext());
-        garment = new Garment();
-        garmentDatabase.garmentDAO().addGarment(garment);
+        // Add the garment to the ViewModel
+        mgarmentViewModel.addGarment(garment);
 
-        Navigation.findNavController(requireView()).navigate(R.id.action_addGarment_to_garmentList);
-//            String comfort = "Is Comfortable";
-//            String loose = "Is Loose";
-//            ;
-//            String fancy = "Is Fancy";
-//            ;
-//            if (selectedComfort == R.id.yescomfort) {
-//                comfort = "Is Comfortable";
-//            } else if (selectedComfort == R.id.nocomfort) {
-//                comfort = "Not Comfortable";
-//            } else if (selectedLoose == R.id.yesloose) {
-//                loose = "Is Loose";
-//            } else if (selectedLoose == R.id.noloose) {
-//                loose = "Not Loose";
-//            } else if (selectedFancy == R.id.yesfancy) {
-//                fancy = "Is Fancy";
-//            } else if (selectedFancy == R.id.nofancy) {
-//                fancy = "Not Fancy";
-//            }
+        // Observe changes in the garment list
+        mgarmentViewModel.getListGarments().observe(getViewLifecycleOwner(), new Observer<List<Garment>>() {
+            @SuppressLint("NotifyDataSetChanged")
+            @Override
+            public void onChanged(List<Garment> garments) {
+                adapter.setGarments(garments);
+                adapter.notifyDataSetChanged();
+            }
+        });
+        try {
+            Navigation.findNavController(requireView()).navigate(R.id.action_addGarment_to_garmentList);
+        } catch (Exception e) {
+            Log.e("NavigationError", "Error navigating to GarmentList fragment: " + e.getMessage());
+            Toast.makeText(requireContext(), "Navigation error", Toast.LENGTH_SHORT).show();
+        }
     }
 
-
-
-    ////////////////////////////////// TAKE PHOTO WITH PHONE CAMERA AND STORE IT IN FILE DIRECTORY/////////////////////////////////
-
+    // Capture photo with phone camera and store it in a file directory
     ActivityResultLauncher<Intent> cameraLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             new ActivityResultCallback<ActivityResult>() {
@@ -201,7 +198,7 @@ public class AddGarment extends Fragment {
                                         imagePath = getRealPathFromUri(imageUri);
                                         Log.d("Image Path", imagePath);
                                         assert fos != null;
-                                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+                                        bitmap.compress(Bitmap.CompressFormat.JPEG, 60, fos);
                                         Objects.requireNonNull(fos);
                                     }
                                 } catch (FileNotFoundException e) {
@@ -229,6 +226,4 @@ public class AddGarment extends Fragment {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         cameraLauncher.launch(intent);
     }
-
-}
-
+        }
