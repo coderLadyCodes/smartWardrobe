@@ -71,7 +71,7 @@ public class GarmentList extends Fragment {
 
         setUpRecyclerView();
     }
-    void delete(Garment garment){
+    private void deleteGarment(Garment garment){
         garmentViewModel.deleteGarment(garment);
     }
 

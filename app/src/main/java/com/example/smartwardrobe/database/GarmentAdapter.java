@@ -24,29 +24,6 @@ public class GarmentAdapter  extends RecyclerView.Adapter<GarmentAdapter.Garment
     public GarmentAdapter(List<Garment> garmentList) {
         this.garmentList = garmentList;
     }
-//
-//    public void deleteGarment(int position) {
-//        // Delete the garment from the database
-//        Garment garmentToDelete = garmentList.get(position);
-//        garmentDAO.deleteGarment(garmentToDelete);
-//
-//        // Remove the garment from the list
-//        garmentList.remove(position);
-//
-//        // Notify the adapter of the item removal
-//        notifyItemRemoved(position);
-//    }
-//
-//    public void updateGarment(int position, Garment updatedGarment) {
-//        // Update the garment in the database
-//        garmentDAO.updateGarment(updatedGarment);
-//
-//        // Update the garment in the list
-//        garmentList.set(position, updatedGarment);
-//
-//        // Notify the adapter of the data change
-//        notifyItemChanged(position);
-//    }
 
     @NonNull
     @Override
@@ -70,6 +47,13 @@ public class GarmentAdapter  extends RecyclerView.Adapter<GarmentAdapter.Garment
      holder.binding.clothloose.setText("Loose: " + garment.isLoose());
      holder.binding.clothcolor.setText("Color : " + garment.getColor());
         holder.bind(garment);
+
+        holder.binding.delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                garmentDAO.deleteGarment(garment);
+            }
+        });
     }
 
     public void setGarments(List<Garment> garments){
