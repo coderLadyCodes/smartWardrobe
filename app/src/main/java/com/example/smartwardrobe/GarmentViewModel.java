@@ -26,4 +26,12 @@ public class GarmentViewModel extends AndroidViewModel{
     public void addGarment(Garment garment){
         garmentRepository.addGarment(garment);
     }
+
+    public void deleteGarment(Garment garment) {
+        garmentRepository.deleteGarment(garment);
+    }
+
+    public void updateGarment(Garment garment) {
+        garmentRepository.updateGarment(garment);
+    }
 }

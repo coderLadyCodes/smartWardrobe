@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import com.example.smartwardrobe.GarmentViewModel;
 import com.example.smartwardrobe.database.Garment;
 import com.example.smartwardrobe.database.GarmentAdapter;
+import com.example.smartwardrobe.database.GarmentDAO;
 import com.example.smartwardrobe.databinding.FragmentGarmentListBinding;
 import com.example.smartwardrobe.databinding.ItemViewBinding;
 
@@ -28,6 +29,7 @@ import java.util.List;
 
 public class GarmentList extends Fragment {
     private GarmentViewModel garmentViewModel;
+    private GarmentDAO garmentDAO;
     List<Garment> garmentList = new ArrayList<>();
     private RecyclerView recyclerView;
     private GarmentAdapter garmentAdapter;
@@ -68,15 +70,9 @@ public class GarmentList extends Fragment {
         });
 
         setUpRecyclerView();
-
-        ibinding.delete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
-
-
+    }
+    void delete(Garment garment){
+        garmentViewModel.deleteGarment(garment);
     }
 
     void setUpRecyclerView(){

@@ -24,14 +24,29 @@ public class GarmentAdapter  extends RecyclerView.Adapter<GarmentAdapter.Garment
     public GarmentAdapter(List<Garment> garmentList) {
         this.garmentList = garmentList;
     }
-    public void deleteGarment(Garment garment) {
-        garmentDAO.deleteGarment(garment);
-    }
-
-    public void updateGarment(Garment garment) {
-        garmentDAO.updateGarment(garment);
-    }
-
+//
+//    public void deleteGarment(int position) {
+//        // Delete the garment from the database
+//        Garment garmentToDelete = garmentList.get(position);
+//        garmentDAO.deleteGarment(garmentToDelete);
+//
+//        // Remove the garment from the list
+//        garmentList.remove(position);
+//
+//        // Notify the adapter of the item removal
+//        notifyItemRemoved(position);
+//    }
+//
+//    public void updateGarment(int position, Garment updatedGarment) {
+//        // Update the garment in the database
+//        garmentDAO.updateGarment(updatedGarment);
+//
+//        // Update the garment in the list
+//        garmentList.set(position, updatedGarment);
+//
+//        // Notify the adapter of the data change
+//        notifyItemChanged(position);
+//    }
 
     @NonNull
     @Override
@@ -87,11 +102,7 @@ public class GarmentAdapter  extends RecyclerView.Adapter<GarmentAdapter.Garment
             binding.clothcolor.setText("Color : " + garment.getColor());
             Bitmap bitmap = BitmapFactory.decodeFile(garment.getPhoto());
             binding.clothimage.setImageBitmap(bitmap);
-
-//            binding.modify.setOnClickListener(v -> listener.updateGarment(getAbsoluteAdapterPosition()));
-//            binding.delete.setOnClickListener(v -> listener.deleteGarment(getAbsoluteAdapterPosition()));
         }
-
-
     }
+
 }

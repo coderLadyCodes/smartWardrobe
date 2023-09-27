@@ -29,4 +29,16 @@ public class GarmentRepository {
             garmentDao.addGarment(garment);
         });
     }
+
+    public void deleteGarment(Garment garment) {
+        GarmentDatabase.databaseWriteExecutor.execute(() -> {
+            garmentDao.deleteGarment(garment);
+        });
+    }
+
+    public void updateGarment(Garment garment) {
+        GarmentDatabase.databaseWriteExecutor.execute(() -> {
+            garmentDao.updateGarment(garment);
+        });
+    }
 }
