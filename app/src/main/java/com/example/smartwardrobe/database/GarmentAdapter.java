@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.smartwardrobe.GarmentViewModel;
 import com.example.smartwardrobe.databinding.ItemViewBinding;
 
 import java.util.ArrayList;
@@ -47,14 +48,7 @@ public class GarmentAdapter  extends RecyclerView.Adapter<GarmentAdapter.Garment
      holder.binding.clothloose.setText("Loose: " + garment.isLoose());
      holder.binding.clothcolor.setText("Color : " + garment.getColor());
         holder.bind(garment);
-
-        holder.binding.delete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                garmentDAO.deleteGarment(garment);
-            }
-        });
-    }
+        }
 
     public void setGarments(List<Garment> garments){
         garmentList.clear();
