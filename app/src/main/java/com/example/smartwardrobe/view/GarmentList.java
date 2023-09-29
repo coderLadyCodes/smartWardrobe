@@ -1,6 +1,8 @@
 package com.example.smartwardrobe.view;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -62,24 +64,61 @@ public class GarmentList extends Fragment {
             @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onChanged(List<Garment> garments) {
-                // Update your garmentList when data changes
                 garmentList.clear();
                 garmentList.addAll(garments);
-                garmentAdapter.notifyDataSetChanged(); // Notify the adapter of data changes
+                if (garmentAdapter != null) {
+                    garmentAdapter.notifyDataSetChanged();
+                }
             }
         });
 
         setUpRecyclerView();
+
     }
+
+
 
     void setUpRecyclerView(){
 
         RecyclerView recyclerView = binding.fragmentGarmentList;
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
-        garmentAdapter = new GarmentAdapter(garmentList);
+        garmentAdapter = new GarmentAdapter(garmentList, getContext());
         recyclerView.setAdapter(garmentAdapter);
+
+
+        garmentAdapter.setOnDeleteClickListener(new GarmentAdapter.OnDeleteClickListener() {
+
+            @Override
+            public void onDeleteClick(Garment garment, int position) {
+                showDeleteConfirmationDialog(position);
+            }
+
+        });
     }
 
+
+    private void showDeleteConfirmationDialog(final int position) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+        builder.setTitle("Confirm Deletion")
+                .setMessage("Are you sure you want to delete this item?")
+                .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // User confirmed, delete the item
+                        if (position != RecyclerView.NO_POSITION) {
+                            // Delete the item from the database using ViewModel
+                            garmentViewModel.deleteGarment(garmentList.get(position));
+                        }
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // User canceled, do nothing
+                    }
+                })
+                .show();
+    }
 
     @Override
     public void onDestroyView() {
