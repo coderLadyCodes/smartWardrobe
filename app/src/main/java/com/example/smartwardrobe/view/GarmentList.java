@@ -76,8 +76,6 @@ public class GarmentList extends Fragment {
 
     }
 
-
-
     void setUpRecyclerView(){
 
         RecyclerView recyclerView = binding.fragmentGarmentList;
@@ -104,17 +102,16 @@ public class GarmentList extends Fragment {
                 .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        // User confirmed, delete the item
                         if (position != RecyclerView.NO_POSITION) {
-                            // Delete the item from the database using ViewModel
-                            garmentViewModel.deleteGarment(garmentList.get(position));
+                            if (garmentViewModel != null) {
+                                garmentViewModel.deleteGarment(garmentList.get(position));
+                            }
                         }
                     }
                 })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        // User canceled, do nothing
                     }
                 })
                 .show();
@@ -125,4 +122,5 @@ public class GarmentList extends Fragment {
         super.onDestroyView();
         binding = null; // Release the ViewBinding reference to avoid memory leaks
     }
+
 }

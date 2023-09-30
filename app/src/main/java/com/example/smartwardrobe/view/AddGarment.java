@@ -29,6 +29,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
 import com.example.smartwardrobe.GarmentViewModel;
@@ -59,6 +60,7 @@ public class AddGarment extends Fragment {
     FragmentAddGarmentBinding binding;
     GarmentAdapter adapter;
 
+
     public AddGarment() {
 
     }
@@ -87,7 +89,7 @@ public class AddGarment extends Fragment {
         binding.buttonaddgarment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                      addGarment();
+                addGarment();
             }
         });
 
@@ -98,6 +100,7 @@ public class AddGarment extends Fragment {
                 openCamera();
             }
         });
+
     }
 
     private void initSpinners() {
@@ -222,8 +225,21 @@ public class AddGarment extends Fragment {
         cursor.close();
         return filePath;
     }
+
     public void openCamera() {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         cameraLauncher.launch(intent);
     }
-        }
+//    public void resetFragmentState() {
+//
+//        binding.spinnercategory.setSelection(0);
+//        binding.spinnerwarmth.setSelection(0);
+//        binding.yescomfort.setChecked(true);
+//        binding.nocomfort.setChecked(false);
+//        binding.yesloose.setChecked(true);
+//        binding.noloose.setChecked(false);
+//        binding.yesfancy.setChecked(true);
+//        binding.nofancy.setChecked(false);
+//    }
+
+}
