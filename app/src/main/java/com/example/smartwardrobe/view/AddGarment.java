@@ -28,6 +28,7 @@ import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
@@ -41,6 +42,7 @@ import com.example.smartwardrobe.database.GarmentDAO;
 import com.example.smartwardrobe.database.GarmentDatabase;
 import com.example.smartwardrobe.database.Warmth;
 import com.example.smartwardrobe.databinding.FragmentAddGarmentBinding;
+import com.example.smartwardrobe.databinding.ItemViewBinding;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -58,6 +60,7 @@ public class AddGarment extends Fragment {
     private GarmentDAO garmentDAO;
     private GarmentViewModel mgarmentViewModel;
     FragmentAddGarmentBinding binding;
+    ItemViewBinding ibinding;
     GarmentAdapter adapter;
 
 
@@ -84,6 +87,7 @@ public class AddGarment extends Fragment {
         mgarmentViewModel = new ViewModelProvider(this).get(GarmentViewModel.class);
         garmentDatabase = GarmentDatabase.getDatabase(requireContext());
         garmentDAO = garmentDatabase.garmentDAO();
+
         initSpinners();
 
         binding.buttonaddgarment.setOnClickListener(new View.OnClickListener() {
@@ -114,6 +118,23 @@ public class AddGarment extends Fragment {
         warmthAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         binding.spinnerwarmth.setAdapter(warmthAdapter);
     }
+//                        UPDATE GARMENT
+//           ibinding.modify.setOnClickListener(new View.OnClickListener() {
+//        @Override
+//        public void onClick(View view) {
+//            Garment updatedGarment = new Garment();
+//            updatedGarment.setId(updatedGarment.getId());
+//            updatedGarment.setPhoto(updatedGarment.getPhoto());
+//            updatedGarment.setCategorization(updatedGarment.getCategorization());
+//            updatedGarment.setWarmth(updatedGarment.getWarmth());
+//            updatedGarment.setColor(updatedGarment.getColor());
+//            updatedGarment.setComfort(updatedGarment.isComfort());
+//            updatedGarment.setLoose(updatedGarment.isLoose());
+//            updatedGarment.setFancy(updatedGarment.isFancy());
+//
+//        }
+//    });
+
 
     private void addGarment() {
         // Get data from the form
@@ -166,11 +187,16 @@ public class AddGarment extends Fragment {
             @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onChanged(List<Garment> garments) {
-                adapter.setGarments(garments);
-                adapter.notifyDataSetChanged();
+                if (adapter != null) {
+                    adapter.setGarments(garments);
+                    adapter.notifyDataSetChanged();
+                }
+//                adapter.setGarments(garments);
+
             }
         });
         try {
+
             Navigation.findNavController(requireView()).navigate(R.id.action_addGarment_to_garmentList);
         } catch (Exception e) {
             Log.e("NavigationError", "Error navigating to GarmentList fragment: " + e.getMessage());

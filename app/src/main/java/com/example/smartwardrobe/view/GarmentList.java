@@ -66,14 +66,14 @@ public class GarmentList extends Fragment {
             public void onChanged(List<Garment> garments) {
                 garmentList.clear();
                 garmentList.addAll(garments);
+
                 if (garmentAdapter != null) {
                     garmentAdapter.notifyDataSetChanged();
                 }
+                setUpRecyclerView();
             }
+
         });
-
-        setUpRecyclerView();
-
     }
 
     void setUpRecyclerView(){
