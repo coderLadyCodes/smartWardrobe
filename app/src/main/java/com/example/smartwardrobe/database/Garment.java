@@ -9,7 +9,7 @@ import androidx.room.PrimaryKey;
 public class Garment {
     @ColumnInfo(name="id")
     @PrimaryKey(autoGenerate = true)
-    private Long id;
+    private int id;
     @ColumnInfo(name = "photo")
     private String photo;
     @ColumnInfo(name = "categorization")
@@ -40,7 +40,7 @@ public class Garment {
         this.warmth = warmth;
     }
 
-    public Garment(Long id, String photo, Categorization categorization, String color, boolean loose, boolean comfort, boolean fancy, Warmth warmth) {
+    public Garment(int id, String photo, Categorization categorization, String color, boolean loose, boolean comfort, boolean fancy, Warmth warmth) {
         this.id = id;
         this.photo = photo;
         this.categorization = categorization;
@@ -51,11 +51,11 @@ public class Garment {
         this.warmth = warmth;
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

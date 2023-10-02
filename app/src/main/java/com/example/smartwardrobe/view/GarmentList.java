@@ -10,6 +10,9 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.NavOptions;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -76,24 +79,29 @@ public class GarmentList extends Fragment {
         });
     }
 
-    void setUpRecyclerView(){
 
+    void setUpRecyclerView(){
         RecyclerView recyclerView = binding.fragmentGarmentList;
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
         garmentAdapter = new GarmentAdapter(garmentList, getContext());
-        recyclerView.setAdapter(garmentAdapter);
-
-
         garmentAdapter.setOnDeleteClickListener(new GarmentAdapter.OnDeleteClickListener() {
-
             @Override
             public void onDeleteClick(Garment garment, int position) {
                 showDeleteConfirmationDialog(position);
-            }
-
-        });
+            }});
+        recyclerView.setAdapter(garmentAdapter);
+//        garmentAdapter.setOnModifyClickListener(new GarmentAdapter.OnModifyClickListener() {
+//            @Override
+//            public void onModifyClick(Garment garment) {
+//                // Navigate to the AddGarment fragment with the selected garment for updating
+//                Bundle bundle = new Bundle();
+//                bundle.putParcelable("garmentToUpdate", garment);
+//
+//                NavController navController = Navigation.findNavController(requireView());
+//                navController.navigate(R.id.action_garmentList_to_addGarment, bundle);
+//            }
+//        });
     }
-
 
     private void showDeleteConfirmationDialog(final int position) {
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());

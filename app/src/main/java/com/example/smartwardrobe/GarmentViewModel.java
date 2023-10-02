@@ -34,4 +34,6 @@ public class GarmentViewModel extends AndroidViewModel{
     public void updateGarment(Garment garment) {
         garmentRepository.updateGarment(garment);
     }
+
+
 }

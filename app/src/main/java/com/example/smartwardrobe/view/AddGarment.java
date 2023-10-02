@@ -104,8 +104,8 @@ public class AddGarment extends Fragment {
                 openCamera();
             }
         });
-
     }
+
 
     private void initSpinners() {
         // Initialize Spinner for Category
@@ -118,23 +118,6 @@ public class AddGarment extends Fragment {
         warmthAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         binding.spinnerwarmth.setAdapter(warmthAdapter);
     }
-//                        UPDATE GARMENT
-//           ibinding.modify.setOnClickListener(new View.OnClickListener() {
-//        @Override
-//        public void onClick(View view) {
-//            Garment updatedGarment = new Garment();
-//            updatedGarment.setId(updatedGarment.getId());
-//            updatedGarment.setPhoto(updatedGarment.getPhoto());
-//            updatedGarment.setCategorization(updatedGarment.getCategorization());
-//            updatedGarment.setWarmth(updatedGarment.getWarmth());
-//            updatedGarment.setColor(updatedGarment.getColor());
-//            updatedGarment.setComfort(updatedGarment.isComfort());
-//            updatedGarment.setLoose(updatedGarment.isLoose());
-//            updatedGarment.setFancy(updatedGarment.isFancy());
-//
-//        }
-//    });
-
 
     private void addGarment() {
         // Get data from the form
@@ -179,6 +162,7 @@ public class AddGarment extends Fragment {
         Garment garment = new Garment(photo, Categorization.valueOf(selectedCategory), colors, selectedLoose == R.id.yesloose,
                 selectedComfort == R.id.yescomfort, selectedFancy == R.id.yesfancy, Warmth.valueOf(selectedWarmth));
 
+
         // Add the garment to the ViewModel
         mgarmentViewModel.addGarment(garment);
 
@@ -191,8 +175,6 @@ public class AddGarment extends Fragment {
                     adapter.setGarments(garments);
                     adapter.notifyDataSetChanged();
                 }
-//                adapter.setGarments(garments);
-
             }
         });
         try {
@@ -256,16 +238,4 @@ public class AddGarment extends Fragment {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         cameraLauncher.launch(intent);
     }
-//    public void resetFragmentState() {
-//
-//        binding.spinnercategory.setSelection(0);
-//        binding.spinnerwarmth.setSelection(0);
-//        binding.yescomfort.setChecked(true);
-//        binding.nocomfort.setChecked(false);
-//        binding.yesloose.setChecked(true);
-//        binding.noloose.setChecked(false);
-//        binding.yesfancy.setChecked(true);
-//        binding.nofancy.setChecked(false);
-//    }
-
 }

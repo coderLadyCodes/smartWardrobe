@@ -5,15 +5,21 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.content.DialogInterface;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.NavController;
+import androidx.navigation.NavOptions;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.smartwardrobe.GarmentViewModel;
+import com.example.smartwardrobe.R;
 import com.example.smartwardrobe.databinding.ItemViewBinding;
 
 import java.util.ArrayList;
@@ -23,6 +29,7 @@ public class GarmentAdapter  extends RecyclerView.Adapter<GarmentAdapter.Garment
     private static List<Garment> garmentList;
     private static Context context;
     GarmentDAO garmentDAO;
+
 
 
     public GarmentAdapter(List<Garment> garmentList, Context context) {
@@ -38,6 +45,7 @@ public class GarmentAdapter  extends RecyclerView.Adapter<GarmentAdapter.Garment
         onDeleteClickListener = listener;
     }
 
+
     @NonNull
     @Override
     public GarmentViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -47,7 +55,7 @@ public class GarmentAdapter  extends RecyclerView.Adapter<GarmentAdapter.Garment
 
     @SuppressLint("SetTextI18n")
     @Override
-    public void onBindViewHolder(@NonNull GarmentViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull GarmentViewHolder holder, @SuppressLint("RecyclerView") int position) {
      Garment garment = garmentList.get(position);
 
      Bitmap bitmap = BitmapFactory.decodeFile(garment.getPhoto());
@@ -70,7 +78,6 @@ public class GarmentAdapter  extends RecyclerView.Adapter<GarmentAdapter.Garment
                 }
             }
         });
-
     }
 
     public void deleteItem(int position) {
@@ -88,6 +95,7 @@ public class GarmentAdapter  extends RecyclerView.Adapter<GarmentAdapter.Garment
     public int getItemCount() {
         return garmentList.size();
     }
+
 
     static class GarmentViewHolder extends RecyclerView.ViewHolder {
 
@@ -118,7 +126,7 @@ public class GarmentAdapter  extends RecyclerView.Adapter<GarmentAdapter.Garment
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
                     if (onDeleteClickListener != null) {
-                        onDeleteClickListener.onDeleteClick(garmentToDelete, getAbsoluteAdapterPosition()); //not sure
+                        onDeleteClickListener.onDeleteClick(garmentToDelete, getAbsoluteAdapterPosition());
                     }
                     dialogInterface.dismiss();
                 }

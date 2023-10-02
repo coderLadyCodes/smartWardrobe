@@ -13,12 +13,17 @@ import java.util.List;
 public interface GarmentDAO {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     public void addGarment(Garment garment);
+
     @Update
     public void updateGarment(Garment garment);
+
     @Delete
     public void deleteGarment(Garment garment);
+
     @Query("select * from garment where id==:id")
     public Garment getGarment(Long id);
+
     @Query("select * from garment")
     public LiveData<List<Garment>> getAllGarment();
+
 }

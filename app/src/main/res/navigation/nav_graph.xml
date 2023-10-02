@@ -42,7 +42,11 @@
         android:id="@+id/garmentList"
         android:name="com.example.smartwardrobe.view.GarmentList"
         android:label="fragment_garment_list"
-        tools:layout="@layout/fragment_garment_list" />
+        tools:layout="@layout/fragment_garment_list" >
+        <action
+            android:id="@+id/action_garmentList_to_addGarment"
+            app:destination="@id/addGarment" />
+    </fragment>
     <fragment
         android:id="@+id/welcome"
         android:name="com.example.smartwardrobe.view.Welcome"
