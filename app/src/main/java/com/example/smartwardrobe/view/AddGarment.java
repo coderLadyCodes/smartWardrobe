@@ -1,4 +1,6 @@
+
 package com.example.smartwardrobe.view;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.ContentResolver;
@@ -31,8 +33,6 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.room.Room;
 
 import com.example.smartwardrobe.GarmentViewModel;
 import com.example.smartwardrobe.R;
@@ -43,7 +43,6 @@ import com.example.smartwardrobe.database.GarmentDAO;
 import com.example.smartwardrobe.database.GarmentDatabase;
 import com.example.smartwardrobe.database.Warmth;
 import com.example.smartwardrobe.databinding.FragmentAddGarmentBinding;
-import com.example.smartwardrobe.databinding.ItemViewBinding;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -61,9 +60,9 @@ public class AddGarment extends Fragment {
     private GarmentDAO garmentDAO;
     private GarmentViewModel mgarmentViewModel;
     FragmentAddGarmentBinding binding;
-    ItemViewBinding ibinding;
     GarmentAdapter adapter;
-
+    boolean isEditMode = false;
+    Garment garmentToUpdate;
 
     public AddGarment() {
 
@@ -78,13 +77,11 @@ public class AddGarment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentAddGarmentBinding.inflate(inflater, container, false);
-
         return binding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-
         mgarmentViewModel = new ViewModelProvider(this).get(GarmentViewModel.class);
         garmentDatabase = GarmentDatabase.getDatabase(requireContext());
         garmentDAO = garmentDatabase.garmentDAO();
@@ -94,7 +91,11 @@ public class AddGarment extends Fragment {
         binding.buttonaddgarment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                addGarment();
+                if (isEditMode) {
+                    updateGarment();
+                } else {
+                    addGarment();
+                }
             }
         });
 
@@ -106,19 +107,22 @@ public class AddGarment extends Fragment {
             }
         });
 
-        ///////////////////////NOT SURE//////////////////////
+        // Check if we are in edit mode
         if (getArguments() != null) {
-            Garment garmentToUpdate = getArguments().getParcelable("garmentToUpdate");
+            garmentToUpdate = getArguments().getParcelable("garmentToUpdate");
 
             if (garmentToUpdate != null) {
                 // Populate the form fields
                 binding.editcolor.setText(garmentToUpdate.getColor());
+                isEditMode = true; // Set edit mode to true
+            }
 
+            if (garmentToUpdate != null && garmentToUpdate.getPhoto() != null && !garmentToUpdate.getPhoto().isEmpty()) {
                 Bitmap bitmap = BitmapFactory.decodeFile(garmentToUpdate.getPhoto());
                 if (bitmap != null) {
                     binding.displayimg.setImageBitmap(bitmap);
+                    imagePath = garmentToUpdate.getPhoto();
                 }
-
 
                 // For the category spinner, set the selected item based on the garment's category
                 String selectedCategory = garmentToUpdate.getCategorization().toString();
@@ -139,28 +143,12 @@ public class AddGarment extends Fragment {
                 }
 
                 // For radio buttons, check/uncheck based on the values from the garment
-                if (garmentToUpdate.isComfort()) {
-                    binding.layoutcomfortradio.check(R.id.yescomfort);
-                } else {
-                    binding.layoutcomfortradio.check(R.id.nocomfort);
-                }
-
-                if (garmentToUpdate.isLoose()) {
-                    binding.layoutlooseradio.check(R.id.yesloose);
-                } else {
-                    binding.layoutlooseradio.check(R.id.noloose);
-                }
-
-                if (garmentToUpdate.isFancy()) {
-                    binding.layoutfancyradio.check(R.id.yesfancy);
-                } else {
-                    binding.layoutfancyradio.check(R.id.nofancy);
-                }
+                binding.layoutcomfortradio.check(garmentToUpdate.isComfort() ? R.id.yescomfort : R.id.nocomfort);
+                binding.layoutlooseradio.check(garmentToUpdate.isLoose() ? R.id.yesloose : R.id.noloose);
+                binding.layoutfancyradio.check(garmentToUpdate.isFancy() ? R.id.yesfancy : R.id.nofancy);
             }
         }
-
     }
-
 
     private void initSpinners() {
         // Initialize Spinner for Category
@@ -176,30 +164,20 @@ public class AddGarment extends Fragment {
 
     private void addGarment() {
         // Get data from the form
-//        String photo = imagePath;
-//        String selectedCategory = binding.spinnercategory.getSelectedItem().toString();
-//        String selectedWarmth = binding.spinnerwarmth.getSelectedItem().toString();
-//        int selectedComfort = binding.layoutcomfortradio.getCheckedRadioButtonId();
-//        int selectedLoose = binding.layoutlooseradio.getCheckedRadioButtonId();
-//        int selectedFancy = binding.layoutfancyradio.getCheckedRadioButtonId();
-//        String colors = binding.editcolor.getText().toString();
         String photo = imagePath;
-        String selectedCategory = binding.spinnercategory.getSelectedItem() != null ?
-                binding.spinnercategory.getSelectedItem().toString() : "";
-        String selectedWarmth = binding.spinnerwarmth.getSelectedItem() != null ?
-                binding.spinnerwarmth.getSelectedItem().toString() : "";
+        String selectedCategory = getSelectedSpinnerItem(binding.spinnercategory);
+        String selectedWarmth = getSelectedSpinnerItem(binding.spinnerwarmth);
         int selectedComfort = binding.layoutcomfortradio.getCheckedRadioButtonId();
         int selectedLoose = binding.layoutlooseradio.getCheckedRadioButtonId();
         int selectedFancy = binding.layoutfancyradio.getCheckedRadioButtonId();
-        String colors = binding.editcolor.getText() != null ?
-                binding.editcolor.getText().toString() : "";
+        String colors = binding.editcolor.getText() != null ? binding.editcolor.getText().toString() : "";
 
         boolean isValid = true;
 
-        // Perform form validation checks
-        if ( photo == null || photo.isEmpty() ) {
-            isValid = false;
-            Toast.makeText(getContext(), "Please Load an Image", Toast.LENGTH_SHORT).show();
+        if (imagePath == null || imagePath.isEmpty()) {
+            if (garmentToUpdate != null && garmentToUpdate.getPhoto() != null) {
+                imagePath = garmentToUpdate.getPhoto();
+            }
         }
 
         if (selectedComfort == -1 || selectedLoose == -1 || selectedFancy == -1) {
@@ -216,21 +194,15 @@ public class AddGarment extends Fragment {
             return;
         }
 
-
-        // Convert selectedComfort, selectedLoose, and selectedFancy to strings
         String comfort = selectedComfort == R.id.yescomfort ? "Is Comfortable" : "Not Comfortable";
         String loose = selectedLoose == R.id.yesloose ? "Is Loose" : "Not Loose";
         String fancy = selectedFancy == R.id.yesfancy ? "Is Fancy" : "Not Fancy";
 
-        // Create a Garment object
         Garment garment = new Garment(photo, Categorization.valueOf(selectedCategory), colors, selectedLoose == R.id.yesloose,
                 selectedComfort == R.id.yescomfort, selectedFancy == R.id.yesfancy, Warmth.valueOf(selectedWarmth));
 
-
-        // Add the garment to the ViewModel
         mgarmentViewModel.addGarment(garment);
 
-        // Observe changes in the garment list
         mgarmentViewModel.getListGarments().observe(getViewLifecycleOwner(), new Observer<List<Garment>>() {
             @SuppressLint("NotifyDataSetChanged")
             @Override
@@ -241,16 +213,79 @@ public class AddGarment extends Fragment {
                 }
             }
         });
-        try {
 
+        try {
             Navigation.findNavController(requireView()).navigate(R.id.action_addGarment_to_garmentList);
         } catch (Exception e) {
             Log.e("NavigationError", "Error navigating to GarmentList fragment: " + e.getMessage());
             Toast.makeText(requireContext(), "Navigation error", Toast.LENGTH_SHORT).show();
         }
-
     }
 
+    private void updateGarment() {
+        String photo = imagePath;
+        String selectedCategory = getSelectedSpinnerItem(binding.spinnercategory);
+        String selectedWarmth = getSelectedSpinnerItem(binding.spinnerwarmth);
+        int selectedComfort = binding.layoutcomfortradio.getCheckedRadioButtonId();
+        int selectedLoose = binding.layoutlooseradio.getCheckedRadioButtonId();
+        int selectedFancy = binding.layoutfancyradio.getCheckedRadioButtonId();
+        String colors = binding.editcolor.getText() != null ? binding.editcolor.getText().toString() : "";
+
+        boolean isValid = true;
+
+        if (imagePath == null || imagePath.isEmpty()) {
+            if (garmentToUpdate != null && garmentToUpdate.getPhoto() != null) {
+                imagePath = garmentToUpdate.getPhoto();
+            }
+        }
+
+        if (selectedComfort == -1 || selectedLoose == -1 || selectedFancy == -1) {
+            isValid = false;
+            Toast.makeText(getContext(), "Please make a choice", Toast.LENGTH_SHORT).show();
+        }
+
+        if (colors == null || colors.isEmpty()) {
+            isValid = false;
+            binding.editcolor.setError("Please Choose a color");
+        }
+
+        if (!isValid) {
+            return;
+        }
+
+        String comfort = selectedComfort == R.id.yescomfort ? "Is Comfortable" : "Not Comfortable";
+        String loose = selectedLoose == R.id.yesloose ? "Is Loose" : "Not Loose";
+        String fancy = selectedFancy == R.id.yesfancy ? "Is Fancy" : "Not Fancy";
+
+        if (garmentToUpdate != null) {
+            // Update the existing garment
+            garmentToUpdate.setPhoto(photo);
+            garmentToUpdate.setCategorization(Categorization.valueOf(selectedCategory));
+            garmentToUpdate.setWarmth(Warmth.valueOf(selectedWarmth));
+            garmentToUpdate.setLoose(selectedLoose == R.id.yesloose);
+            garmentToUpdate.setComfort(selectedComfort == R.id.yescomfort);
+            garmentToUpdate.setFancy(selectedFancy == R.id.yesfancy);
+            garmentToUpdate.setColor(colors);
+
+            // Pass the updated garment to the ViewModel to update in the database
+            mgarmentViewModel.updateGarment(garmentToUpdate);
+        }
+
+        try {
+            Navigation.findNavController(requireView()).navigate(R.id.action_addGarment_to_garmentList);
+        } catch (Exception e) {
+            Log.e("NavigationError", "Error navigating to GarmentList fragment: " + e.getMessage());
+            Toast.makeText(requireContext(), "Navigation error", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    // Helper function to get the selected item from a spinner
+    private String getSelectedSpinnerItem(AdapterView<?> spinner) {
+        if (spinner != null && spinner.getSelectedItem() != null) {
+            return spinner.getSelectedItem().toString();
+        }
+        return "";
+    }
 
     // Capture photo with phone camera and store it in a file directory
     ActivityResultLauncher<Intent> cameraLauncher = registerForActivityResult(
@@ -305,3 +340,4 @@ public class AddGarment extends Fragment {
         cameraLauncher.launch(intent);
     }
 }
+
