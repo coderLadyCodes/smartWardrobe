@@ -5,8 +5,11 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Parcelable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +25,12 @@ import com.example.smartwardrobe.GarmentViewModel;
 import com.example.smartwardrobe.R;
 import com.example.smartwardrobe.databinding.ItemViewBinding;
 
+import org.apache.commons.io.FileUtils;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,7 +38,7 @@ public class GarmentAdapter  extends RecyclerView.Adapter<GarmentAdapter.Garment
     private static List<Garment> garmentList;
     private static Context context;
     GarmentDAO garmentDAO;
-
+    private OnModifyClickListener onModifyClickListener;
 
 
     public GarmentAdapter(List<Garment> garmentList, Context context) {
@@ -44,7 +53,12 @@ public class GarmentAdapter  extends RecyclerView.Adapter<GarmentAdapter.Garment
     public void setOnDeleteClickListener(OnDeleteClickListener listener) {
         onDeleteClickListener = listener;
     }
-
+    public interface OnModifyClickListener {
+        void onModifyClick(Garment garment);
+    }
+    public void setOnModifyClickListener(OnModifyClickListener onModifyClickListener) {
+        this.onModifyClickListener = onModifyClickListener;
+    }
 
     @NonNull
     @Override
@@ -78,13 +92,50 @@ public class GarmentAdapter  extends RecyclerView.Adapter<GarmentAdapter.Garment
                 }
             }
         });
+        holder.binding.modify.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (onModifyClickListener != null) {
+                    onModifyClickListener.onModifyClick(garment);
+                }
+            }
+        });
     }
 
     public void deleteItem(int position) {
-        garmentList.remove(position);
-        notifyItemRemoved(position);
-    }
+//        Garment deletedGarment  = garmentList.get(position);
+//        notifyItemRemoved(position);
+//        garmentList.remove(position);
 
+///////////////////////////////////PHOTO IS NOT DELETED FROM EXTERNAL STORAGE WHEN I DELETE GARMENT////////////////////////////////////////////
+        if (position >= 0 && position < garmentList.size()) {
+            Garment deletedGarment = garmentList.get(position);
+            garmentList.remove(position);
+            notifyItemRemoved(position);
+
+        if (deletedGarment != null) {
+            String imagePath = deletedGarment.getPhoto();
+            if (imagePath != null && !imagePath.isEmpty()) {
+                File imageFile = new File(imagePath);
+                if (imageFile.exists()) {
+                    boolean deleted = imageFile.delete();
+                    if (deleted) {
+                        // Image deleted successfully
+                        Log.d("ImageDeletion", "Image deleted: " + imagePath);
+                    } else {
+                        // Handle deletion failure here (e.g., show a Toast or log an error message)
+                        Log.e("ImageDeletion", "Failed to delete image: " + imagePath);
+                    }
+                } else {
+                    // File does not exist at the specified path
+                    Log.e("ImageDeletion", "File does not exist: " + imagePath);
+                }
+            } else {
+                // Image path is null or empty
+                Log.e("ImageDeletion", "Invalid image path");
+            }
+        }
+    }}
     public void setGarments(List<Garment> garments){
         garmentList.clear();
         garmentList.addAll(garments);
@@ -141,8 +192,6 @@ public class GarmentAdapter  extends RecyclerView.Adapter<GarmentAdapter.Garment
             AlertDialog dialog = builder.create();
             dialog.show();
         }
-
-
         @SuppressLint("SetTextI18n")
         public void bind(Garment garment) {
             binding.clothcategory.setText("Category: " + garment.getCategorization().toString());

@@ -66,4 +66,5 @@ dependencies {
     implementation("androidx.camera:camera-view:1.4.0-alpha01")
     implementation ("androidx.camera:camera-extensions:1.4.0-alpha01")
     implementation("androidx.recyclerview:recyclerview:1.3.1")
+    implementation ("commons-io:commons-io:2.11.0")
 }

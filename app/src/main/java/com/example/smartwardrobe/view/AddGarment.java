@@ -6,6 +6,7 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -104,6 +105,60 @@ public class AddGarment extends Fragment {
                 openCamera();
             }
         });
+
+        ///////////////////////NOT SURE//////////////////////
+        if (getArguments() != null) {
+            Garment garmentToUpdate = getArguments().getParcelable("garmentToUpdate");
+
+            if (garmentToUpdate != null) {
+                // Populate the form fields
+                binding.editcolor.setText(garmentToUpdate.getColor());
+
+                Bitmap bitmap = BitmapFactory.decodeFile(garmentToUpdate.getPhoto());
+                if (bitmap != null) {
+                    binding.displayimg.setImageBitmap(bitmap);
+                }
+
+
+                // For the category spinner, set the selected item based on the garment's category
+                String selectedCategory = garmentToUpdate.getCategorization().toString();
+                for (int i = 0; i < binding.spinnercategory.getCount(); i++) {
+                    if (binding.spinnercategory.getItemAtPosition(i).toString().equals(selectedCategory)) {
+                        binding.spinnercategory.setSelection(i);
+                        break;
+                    }
+                }
+
+                // For the warmth spinner, set the selected item based on the garment's warmth
+                String selectedWarmth = garmentToUpdate.getWarmth().toString();
+                for (int i = 0; i < binding.spinnerwarmth.getCount(); i++) {
+                    if (binding.spinnerwarmth.getItemAtPosition(i).toString().equals(selectedWarmth)) {
+                        binding.spinnerwarmth.setSelection(i);
+                        break;
+                    }
+                }
+
+                // For radio buttons, check/uncheck based on the values from the garment
+                if (garmentToUpdate.isComfort()) {
+                    binding.layoutcomfortradio.check(R.id.yescomfort);
+                } else {
+                    binding.layoutcomfortradio.check(R.id.nocomfort);
+                }
+
+                if (garmentToUpdate.isLoose()) {
+                    binding.layoutlooseradio.check(R.id.yesloose);
+                } else {
+                    binding.layoutlooseradio.check(R.id.noloose);
+                }
+
+                if (garmentToUpdate.isFancy()) {
+                    binding.layoutfancyradio.check(R.id.yesfancy);
+                } else {
+                    binding.layoutfancyradio.check(R.id.nofancy);
+                }
+            }
+        }
+
     }
 
 
@@ -121,20 +176,30 @@ public class AddGarment extends Fragment {
 
     private void addGarment() {
         // Get data from the form
+//        String photo = imagePath;
+//        String selectedCategory = binding.spinnercategory.getSelectedItem().toString();
+//        String selectedWarmth = binding.spinnerwarmth.getSelectedItem().toString();
+//        int selectedComfort = binding.layoutcomfortradio.getCheckedRadioButtonId();
+//        int selectedLoose = binding.layoutlooseradio.getCheckedRadioButtonId();
+//        int selectedFancy = binding.layoutfancyradio.getCheckedRadioButtonId();
+//        String colors = binding.editcolor.getText().toString();
         String photo = imagePath;
-        String selectedCategory = binding.spinnercategory.getSelectedItem().toString();
-        String selectedWarmth = binding.spinnerwarmth.getSelectedItem().toString();
+        String selectedCategory = binding.spinnercategory.getSelectedItem() != null ?
+                binding.spinnercategory.getSelectedItem().toString() : "";
+        String selectedWarmth = binding.spinnerwarmth.getSelectedItem() != null ?
+                binding.spinnerwarmth.getSelectedItem().toString() : "";
         int selectedComfort = binding.layoutcomfortradio.getCheckedRadioButtonId();
         int selectedLoose = binding.layoutlooseradio.getCheckedRadioButtonId();
         int selectedFancy = binding.layoutfancyradio.getCheckedRadioButtonId();
-        String colors = binding.editcolor.getText().toString();
+        String colors = binding.editcolor.getText() != null ?
+                binding.editcolor.getText().toString() : "";
 
         boolean isValid = true;
 
         // Perform form validation checks
-        if (photo.isEmpty()) {
+        if ( photo == null || photo.isEmpty() ) {
             isValid = false;
-            binding.editcolor.setError("Please Load an Image");
+            Toast.makeText(getContext(), "Please Load an Image", Toast.LENGTH_SHORT).show();
         }
 
         if (selectedComfort == -1 || selectedLoose == -1 || selectedFancy == -1) {
@@ -142,13 +207,12 @@ public class AddGarment extends Fragment {
             Toast.makeText(getContext(), "Please make a choice", Toast.LENGTH_SHORT).show();
         }
 
-        if (colors.isEmpty()) {
+        if (colors == null || colors.isEmpty()) {
             isValid = false;
             binding.editcolor.setError("Please Choose a color");
         }
 
         if (!isValid) {
-            // Validation failed, return without adding the garment
             return;
         }
 
@@ -184,7 +248,9 @@ public class AddGarment extends Fragment {
             Log.e("NavigationError", "Error navigating to GarmentList fragment: " + e.getMessage());
             Toast.makeText(requireContext(), "Navigation error", Toast.LENGTH_SHORT).show();
         }
+
     }
+
 
     // Capture photo with phone camera and store it in a file directory
     ActivityResultLauncher<Intent> cameraLauncher = registerForActivityResult(

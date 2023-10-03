@@ -16,12 +16,14 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.smartwardrobe.GarmentViewModel;
+import com.example.smartwardrobe.R;
 import com.example.smartwardrobe.database.Garment;
 import com.example.smartwardrobe.database.GarmentAdapter;
 import com.example.smartwardrobe.database.GarmentDAO;
@@ -84,23 +86,23 @@ public class GarmentList extends Fragment {
         RecyclerView recyclerView = binding.fragmentGarmentList;
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
         garmentAdapter = new GarmentAdapter(garmentList, getContext());
+        recyclerView.setAdapter(garmentAdapter);
         garmentAdapter.setOnDeleteClickListener(new GarmentAdapter.OnDeleteClickListener() {
             @Override
             public void onDeleteClick(Garment garment, int position) {
                 showDeleteConfirmationDialog(position);
             }});
-        recyclerView.setAdapter(garmentAdapter);
-//        garmentAdapter.setOnModifyClickListener(new GarmentAdapter.OnModifyClickListener() {
-//            @Override
-//            public void onModifyClick(Garment garment) {
-//                // Navigate to the AddGarment fragment with the selected garment for updating
-//                Bundle bundle = new Bundle();
-//                bundle.putParcelable("garmentToUpdate", garment);
-//
-//                NavController navController = Navigation.findNavController(requireView());
-//                navController.navigate(R.id.action_garmentList_to_addGarment, bundle);
-//            }
-//        });
+        garmentAdapter.setOnModifyClickListener(new GarmentAdapter.OnModifyClickListener() {
+            @Override
+            public void onModifyClick(Garment garment) {
+                // Navigate to the AddGarment fragment with the selected garment for updating
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("garmentToUpdate", (Parcelable) garment);
+
+                NavController navController = Navigation.findNavController(requireView());
+                navController.navigate(R.id.action_garmentList_to_addGarment, bundle);
+            }
+        });
     }
 
     private void showDeleteConfirmationDialog(final int position) {
@@ -117,6 +119,7 @@ public class GarmentList extends Fragment {
                         }
                     }
                 })
+
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
