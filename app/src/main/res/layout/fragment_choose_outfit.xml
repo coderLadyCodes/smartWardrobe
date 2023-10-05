@@ -70,6 +70,7 @@
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:layout_weight="6"
+                android:backgroundTint="@color/peach"
                 android:gravity="center"
                 android:spinnerMode="dialog" />
         </LinearLayout>
@@ -93,12 +94,12 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="2"
-                android:text="@string/fancy"
+                android:text="@string/comfort"
                 android:textColor="@color/purple"
                 android:textSize="18sp" />
 
             <RadioGroup
-                android:id="@+id/layoutfancyradio"
+                android:id="@+id/layoutcomfortradio"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="6"
@@ -108,15 +109,24 @@
                 tools:ignore="RtlSymmetry">
 
                 <RadioButton
+                    android:id="@+id/yescomfort"
                     android:layout_width="wrap_content"
                     android:layout_height="50dp"
                     android:layout_marginEnd="40dp"
-                    android:text="@string/yes" />
+                    android:buttonTint="@color/peach"
+                    android:text="@string/yes"
+                    android:textColor="@color/peach"
+                    android:textSize="20sp" />
 
                 <RadioButton
+                    android:id="@+id/nocomfort"
                     android:layout_width="wrap_content"
                     android:layout_height="50dp"
-                    android:text="@string/no" />
+                    android:layout_marginEnd="40dp"
+                    android:buttonTint="@color/peach"
+                    android:text="@string/no"
+                    android:textColor="@color/peach"
+                    android:textSize="20sp" />
             </RadioGroup>
 
         </LinearLayout>
@@ -146,7 +156,7 @@
             <RadioGroup
                 android:id="@+id/layoutlooseradio"
                 android:layout_width="0dp"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="6"
                 android:gravity="start"
                 android:orientation="horizontal"
@@ -154,15 +164,24 @@
                 tools:ignore="RtlSymmetry">
 
                 <RadioButton
+                    android:id="@+id/yesloose"
                     android:layout_width="wrap_content"
                     android:layout_height="50dp"
                     android:layout_marginEnd="40dp"
-                    android:text="@string/yes" />
+                    android:buttonTint="@color/peach"
+                    android:text="@string/yes"
+                    android:textColor="@color/peach"
+                    android:textSize="20sp" />
 
                 <RadioButton
+                    android:id="@+id/noloose"
                     android:layout_width="wrap_content"
-                    android:layout_height="48dp"
-                    android:text="@string/no" />
+                    android:layout_height="50dp"
+                    android:layout_marginEnd="40dp"
+                    android:buttonTint="@color/peach"
+                    android:text="@string/no"
+                    android:textColor="@color/peach"
+                    android:textSize="20sp" />
             </RadioGroup>
         </LinearLayout>
 
@@ -184,14 +203,14 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="2"
-                android:text="@string/comfort"
+                android:text="@string/fancy"
                 android:textColor="@color/purple"
                 android:textSize="18sp" />
 
             <RadioGroup
-                android:id="@+id/layoutcomfortradio"
+                android:id="@+id/layoutfancyradio"
                 android:layout_width="0dp"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="6"
                 android:gravity="start"
                 android:orientation="horizontal"
@@ -199,15 +218,24 @@
                 tools:ignore="RtlSymmetry">
 
                 <RadioButton
+                    android:id="@+id/yesfancy"
                     android:layout_width="wrap_content"
                     android:layout_height="50dp"
                     android:layout_marginEnd="40dp"
-                    android:text="@string/yes" />
+                    android:buttonTint="@color/peach"
+                    android:text="@string/yes"
+                    android:textColor="@color/peach"
+                    android:textSize="20sp" />
 
                 <RadioButton
+                    android:id="@+id/nofancy"
                     android:layout_width="wrap_content"
                     android:layout_height="50dp"
-                    android:text="@string/no" />
+                    android:layout_marginEnd="40dp"
+                    android:buttonTint="@color/peach"
+                    android:text="@string/no"
+                    android:textColor="@color/peach"
+                    android:textSize="20sp" />
             </RadioGroup>
         </LinearLayout>
 
@@ -240,10 +268,13 @@
                 android:layout_height="50dp"
                 android:layout_marginEnd="94dp"
                 android:layout_weight="2"
+                android:backgroundTint="@color/peach"
                 android:gravity="center"
                 android:hint="@string/color_of_your_item"
-                android:inputType="text"
-                android:spinnerMode="dialog" />
+                android:spinnerMode="dialog"
+                android:textColor="@color/peach"
+                android:textColorHint="@color/peach"
+                android:textSize="20sp" />
         </LinearLayout>
     </LinearLayout>
 
