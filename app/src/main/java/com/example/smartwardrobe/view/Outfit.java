@@ -45,6 +45,11 @@ public class Outfit implements Parcelable {
         }
     };
 
+    public Outfit() {
+
+    }
+
+    ///////////////////////////////////// The setters are not necessary here//////////////////////////////////////
     public Garment getTop() {
         return top;
     }
@@ -76,7 +81,7 @@ public class Outfit implements Parcelable {
     public void setCoat(Garment coat) {
         this.coat = coat;
     }
-
+//////////////////////////////////////////the to string() is not necessary I think/////////////////////////////////////
     @Override
     public String toString() {
         return "Outfit{" +

@@ -17,7 +17,7 @@ public class Garment implements Parcelable {
     @ColumnInfo(name = "photo")
     private String photo;
     @ColumnInfo(name = "categorization")
-    private Categorization categorization;
+    public Categorization categorization;
     @ColumnInfo(name = "color")
     private String color;
     @ColumnInfo(name = "loose")

@@ -36,6 +36,7 @@ import java.util.List;
 
 public class GarmentList extends Fragment {
     private GarmentViewModel garmentViewModel;
+    private SharedViewModel sharedViewModel;
     private GarmentDAO garmentDAO;
     List<Garment> garmentList = new ArrayList<>();
     private RecyclerView recyclerView;
@@ -64,11 +65,13 @@ public class GarmentList extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
         garmentViewModel = new ViewModelProvider(this).get(GarmentViewModel.class);
         garmentViewModel.getListGarments().observe(getViewLifecycleOwner(), new Observer<List<Garment>>() {
             @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onChanged(List<Garment> garments) {
+                sharedViewModel.setGarmentList(garments);
                 garmentList.clear();
                 garmentList.addAll(garments);
 
