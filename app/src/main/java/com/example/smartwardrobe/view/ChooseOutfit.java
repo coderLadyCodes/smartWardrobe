@@ -95,17 +95,25 @@ public class ChooseOutfit extends Fragment {
     }
 
     private boolean garmentMatchesCriteria(Garment garment, String warmth, boolean comfort, boolean fancy, boolean loose, String color) {
-        // Implement your matching logic here, e.g., checking the warmth level, comfort, color, etc.
-        // You should customize this method based on your garment model.
+        boolean warmthMatches = garment.getWarmth().equals(warmth);
+        boolean comfortMatches = garment.isComfort() == comfort;
+        boolean fancyMatches = garment.isFancy() == fancy;
+        boolean colorMatches = garment.getColor().equals(color);
 
-        // Replace this with your actual matching logic.
-        if (garment.getWarmth().equals(warmth) && garment.isComfort() == comfort && garment.isFancy() == fancy && garment.getColor().equals(color)) {
-            return true;
-        }
-        return false;
+        return warmthMatches && comfortMatches && fancyMatches && colorMatches;
+
     }
     private void assignGarmentsToOutfit(Outfit outfit, List<Garment> garments) {
-        // Implement your logic to assign garments to the outfit as top, bottom, shoes, and coat.
-        // You should customize this part based on your garment categories and outfit model.
+        for (Garment garment : garments) {
+                if (garment.getCategorization() == garment.getCategorization().TOP) {
+                outfit.setTop(garment);
+            } else if (garment.getCategorization() == garment.getCategorization().BOTTOM) {
+                outfit.setBottom(garment);
+            } else if (garment.getCategorization() == garment.getCategorization().SHOES) {
+                outfit.setShoes(garment);
+            } else if (garment.getCategorization() == garment.getCategorization().COAT) {
+                outfit.setCoat(garment);
+            }
+        }
     }
 }
