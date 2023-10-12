@@ -5,14 +5,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import com.example.smartwardrobe.R;
-import com.example.smartwardrobe.database.Categorization;
 import com.example.smartwardrobe.database.Garment;
 import com.example.smartwardrobe.database.Warmth;
 import com.example.smartwardrobe.databinding.FragmentChooseOutfitBinding;
@@ -26,9 +24,6 @@ public class ChooseOutfit extends Fragment {
     private boolean selectedFancy;
     private boolean selectedLoose;
     private String selectedColor;
-    private Garment garment;
-
-    private Categorization categorization;
     private SharedViewModel sharedViewModel;
     FragmentChooseOutfitBinding binding;
 
@@ -79,38 +74,16 @@ public class ChooseOutfit extends Fragment {
     }
 
     private Outfit generateOutfit(String warmth, boolean comfort, boolean fancy, boolean loose, String color) {
-        List<Garment> garmentList = getWardrobeData(); // Implement this method to get your garment list.
-        Outfit outfit = new Outfit();
-
+        List<Garment> garmentList = sharedViewModel.getGarmentList();
         // Filter your garment list based on user choices
         List<Garment> filteredGarments = filterGarments(garmentList, warmth, comfort, fancy, loose, color);
-
-        // Use the filtered garments to set the outfit's top, bottom, shoes, and coat
-        // You should customize this part to select garments as per your logic.
-        // The code below simply assigns the first garment found to each category.
-
-        for (Garment garment : filteredGarments) {
-            if (garment.getCategorization() == Garment.categorization.TOP) {
-                outfit.setTop(garment);
-            } else if (garment.getCategorization() == Garment.categorization.BOTTOM) {
-                outfit.setBottom(garment);
-            } else if (garment.getCategorization() == Garment.categorization.SHOES) {
-                outfit.setShoes(garment);
-            } else if (garment.getCategorization() == Garment.categorization.COAT) {
-                outfit.setCoat(garment);
-            }
-        }
-
+        Outfit outfit = new Outfit();
+        assignGarmentsToOutfit(outfit, filteredGarments);
         return outfit;
     }
 
     // Implement your filtering logic based on user choices.
     private List<Garment> filterGarments(List<Garment> garmentList, String warmth, boolean comfort, boolean fancy, boolean loose, String color) {
-        // Implement your filtering logic here based on user choices (warmth, comfort, fancy, loose, color).
-        // This can involve iterating through the garmentList and applying filters.
-        // You should return a filtered list of garments that match the user's criteria.
-
-        // Replace this with your actual filtering logic.
         List<Garment> filteredGarments = new ArrayList<>();
         for (Garment garment : garmentList) {
             if (garmentMatchesCriteria(garment, warmth, comfort, fancy, loose, color)) {
@@ -121,21 +94,18 @@ public class ChooseOutfit extends Fragment {
         return filteredGarments;
     }
 
-    // Implement a method to check if a garment matches user criteria.
     private boolean garmentMatchesCriteria(Garment garment, String warmth, boolean comfort, boolean fancy, boolean loose, String color) {
         // Implement your matching logic here, e.g., checking the warmth level, comfort, color, etc.
         // You should customize this method based on your garment model.
 
         // Replace this with your actual matching logic.
-        if (garment.getWarmth().equals(warmth)) {
-            garment.isComfort();
+        if (garment.getWarmth().equals(warmth) && garment.isComfort() == comfort && garment.isFancy() == fancy && garment.getColor().equals(color)) {
+            return true;
         }
         return false;
     }
-
-    // Implement a method to retrieve your garment list from the ViewModel or data source.
-    private List<Garment> getWardrobeData() {
-        SharedViewModel sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
-        return sharedViewModel.getGarmentList();
+    private void assignGarmentsToOutfit(Outfit outfit, List<Garment> garments) {
+        // Implement your logic to assign garments to the outfit as top, bottom, shoes, and coat.
+        // You should customize this part based on your garment categories and outfit model.
     }
 }
